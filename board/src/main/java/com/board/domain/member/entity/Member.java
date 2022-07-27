@@ -1,5 +1,6 @@
 package com.board.domain.member.entity;
 
+import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -10,10 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,27 +33,37 @@ public class Member {
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false, length = 60)
+    // 닉네임
+    @Column(nullable = false, length = 40)
     private String nickname;
 
+    // 작성일
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @Column(nullable = false, updatable = false)
     private LocalDate enrollDate;
 
+    // 수정일
     @UpdateTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate updateDate;
 
+    // 재발행 토큰
+    private String refreshToken;
+
+    // 이메일 인증값
+    private  Boolean emailAuth;
+
+    // 조인컬럼 (Baord)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="memberUUID")
+    private Collection<Board> boardList;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
-
-    private String refreshToken;
-
-    private Boolean emailAuth;
 
     @Builder
     public Member(String email, String password, String nickname, List<Role> roles, Boolean emailAuth, String provider) {

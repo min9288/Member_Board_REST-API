@@ -1,4 +1,4 @@
-package com.board.web.controller;
+package com.board.web.controller.member;
 
 import com.board.domain.email.dto.requestDTO.EmailAuthRequestDto;
 import com.board.domain.member.dto.requestDTO.MemberLoginRequestDto;

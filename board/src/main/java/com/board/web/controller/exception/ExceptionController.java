@@ -1,4 +1,4 @@
-package com.board.web.controller;
+package com.board.web.controller.exception;
 
 import com.board.exception.AuthenticationEntryPointException;
 import lombok.extern.slf4j.Slf4j;
