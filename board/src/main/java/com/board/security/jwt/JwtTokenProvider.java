@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
-@Setter
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -26,16 +25,18 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secretKey}")
     private String secretKey;
 
-    private long tokenValidTime = 1L; // 30분
+    private long tokenValidTime = 30 * 60 * 1000L; // 30분
     private long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 7; // 7일
 
     private final UserDetailsService userDetailsService;
+
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
+    // 토큰 생성
     public String createToken(String email) {
         Claims claims = Jwts.claims().setSubject(email);
         Date now = new Date();
@@ -48,6 +49,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // 토큰 재발행
     public String createRefreshToken() {
         Date now = new Date();
 
@@ -65,7 +67,7 @@ public class JwtTokenProvider {
 
     public String getMemberEmail(String token) {
         try {
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJwt(token).getBody().getSubject();
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         } catch (ExpiredJwtException e) {
             return e.getClaims().getSubject();
         }
@@ -77,7 +79,7 @@ public class JwtTokenProvider {
 
     public boolean validateTokenExpiration(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJwt(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
