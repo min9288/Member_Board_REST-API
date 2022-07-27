@@ -64,4 +64,12 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-108, "인가에 따른 예외가 발생했습니다.");
     }
 
+    @ExceptionHandler(ProcessFailureException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result processFailureException() {
+        return responseService.getFailureResult(-109, "처리 과정에 오류가 발생했습니다.");
+    }
+
+
+
 }

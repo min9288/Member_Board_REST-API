@@ -4,6 +4,7 @@ import com.board.domain.board.entity.enumPackage.BoardStatus;
 import com.board.domain.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -41,7 +42,7 @@ public class Board {
     private int hit;
 
     // 작성자
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "memberUUID")
     private Member writer;
 
@@ -62,5 +63,18 @@ public class Board {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate updateDate;
+
+    // 작성자 확인 메서드
+    public void confirmWriter(Member writer) {
+        this.writer = writer;
+        writer.addBoard(this);
+    }
+
+    @Builder
+    public Board(String title, String contents, Member writer, BoardStatus boardStatus) {
+        this.title = title;
+        this.contents = contents;
+        this.boardStatus = boardStatus;
+    }
 
 }

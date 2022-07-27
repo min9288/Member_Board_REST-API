@@ -20,23 +20,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
-                .csrf().disable()
+                .httpBasic().disable() // rest api이므로 기본설정 미사용
+                .csrf().disable()  // rest api이므로 csrf 보안 미사용
                 .formLogin().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt로 인증하므로 세션 미사용
                 .and()
-                    .authorizeRequests()
-                    .antMatchers("/sign/**").permitAll()
-                    .antMatchers("/social/**").permitAll()
-                    .antMatchers("/exception/**").permitAll()
-                    .antMatchers("/confirm-email").permitAll()
-                    .antMatchers("/test").permitAll()
-                    .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/sign/**").permitAll()
+                .antMatchers("/exception/**").permitAll()
+                .antMatchers("/confirm-email").permitAll()
+                .antMatchers("/test").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
-                    .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }

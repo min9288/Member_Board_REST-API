@@ -39,6 +39,7 @@ public class SignService {
 
     private final EmailService emailService;
 
+
     // DTO로 들어온 값을 통해 회원가입을 진행
     @Transactional
     public MemberRegisterResponseDto registerMember(MemberRegisterRequestDto requestDto) {
@@ -98,6 +99,8 @@ public class SignService {
     // 토큰 재발행
     @Transactional
     public TokenResponseDto reIssue(TokenRequestDto requestDto) {
+
+
         if (!jwtTokenProvider.validateTokenExpiration(requestDto.getRefreshToken()))
             throw new InvalidRefreshTokenException();
 
@@ -108,6 +111,7 @@ public class SignService {
 
         String accessToken = jwtTokenProvider.createToken(member.getEmail());
         String refreshToken = jwtTokenProvider.createRefreshToken();
+
         member.updateRefreshToken(refreshToken);
         return new TokenResponseDto(accessToken, refreshToken);
     }

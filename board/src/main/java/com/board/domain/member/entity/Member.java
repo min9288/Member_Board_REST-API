@@ -57,7 +57,7 @@ public class Member {
     private  Boolean emailAuth;
 
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="memberUUID")
     private Collection<Board> boardList;
 
@@ -72,6 +72,11 @@ public class Member {
         this.nickname = nickname;
         this.roles = Collections.singletonList(Role.ROLE_MEMBER);
         this.emailAuth = emailAuth;
+    }
+
+    // 게시글 연관관계 메서드
+    public void addBoard(Board board) {
+        boardList.add(board);
     }
 
     public void addRole(Role role) {

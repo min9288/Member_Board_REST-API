@@ -1,7 +1,6 @@
 package com.board.domain.member.repository;
 
 import com.board.domain.member.entity.Member;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
