@@ -2,6 +2,7 @@ package com.board.web.controller.board;
 
 import com.board.domain.board.dto.requestDTO.BoardWriteRequestDTO;
 import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
+import com.board.domain.board.dto.responseDTO.BoardGetBoardResponseDTO;
 import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
 import com.board.domain.board.service.BoardService;
 import com.board.domain.response.service.ResponseService;
@@ -39,7 +40,10 @@ public class boardController {
     }
 
     // 게시글 상세 조회 (비밀글은 본인만 조회 가능)
-
+    @GetMapping("/detail/{title}")
+    public SingleResult<BoardGetBoardResponseDTO> findBoard(@PathVariable("title") String title) {
+        return responseService.getSingleResult(boardService.findBoard(title));
+    }
 
     // 게시글 수정
 

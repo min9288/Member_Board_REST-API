@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static com.board.domain.board.entity.QBoard.board;
 import static com.board.domain.member.entity.QMember.member;
@@ -37,4 +38,6 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
                 .fetch();
         return boardList;
     }
+
+
 }

@@ -76,6 +76,11 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-110, "게시글의 작성자가 아닙니다.");
     }
 
+    @ExceptionHandler(BoardNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result boardNotFoundException() {
+        return responseService.getFailureResult(-111, "게시글이 존재하지 않습니다.");
+    }
 
 
 }
