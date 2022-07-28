@@ -82,5 +82,11 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-111, "게시글이 존재하지 않습니다.");
     }
 
+    @ExceptionHandler(BoardDeleteFailureException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result boardDeleteFailureException() {
+        return responseService.getFailureResult(-112, "삭제에 실패 했습니다.");
+    }
+
 
 }

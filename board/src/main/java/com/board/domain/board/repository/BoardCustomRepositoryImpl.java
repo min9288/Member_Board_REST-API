@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.board.domain.board.entity.QBoard.board;
 import static com.board.domain.member.entity.QMember.member;
@@ -37,6 +38,14 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
                 .leftJoin(board.writer, member)
                 .fetch();
         return boardList;
+    }
+
+    @Override
+    public Long deleteBoardByBoardUUID(UUID boardUUID) {
+        Long delete = jpaQueryFactory.delete(board)
+                .where(board.boardUUID.eq(boardUUID))
+                .execute();
+        return delete;
     }
 
 

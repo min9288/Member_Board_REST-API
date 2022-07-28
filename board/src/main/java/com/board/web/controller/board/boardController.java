@@ -2,10 +2,7 @@ package com.board.web.controller.board;
 
 import com.board.domain.board.dto.requestDTO.BoardUpdateRequestDTO;
 import com.board.domain.board.dto.requestDTO.BoardWriteRequestDTO;
-import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardGetBoardResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
+import com.board.domain.board.dto.responseDTO.*;
 import com.board.domain.board.service.BoardService;
 import com.board.domain.response.service.ResponseService;
 import com.board.domain.result.MultipleResult;
@@ -31,7 +28,7 @@ public class boardController {
     }
 
     // 게시글 전체 조회 (잠금이 안된 게시물만 조회 가능)
-    @GetMapping
+    @GetMapping("/getAll")
     public MultipleResult<BoardGetBoardListResponseDTO> findAllBoardList() {
         return responseService.getMultipleResult(boardService.findAllBoardList());
     }
@@ -56,4 +53,8 @@ public class boardController {
     }
 
     // 게시글 삭제
+    @DeleteMapping("/delete/{boardUUID}")
+    public SingleResult<BoardDeleteResponseDTO> deleteBoard(@PathVariable("boardUUID") UUID boardUUID) {
+        return responseService.getSingleResult(boardService.deleteBoard(boardUUID));
+    }
 }

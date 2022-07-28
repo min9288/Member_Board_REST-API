@@ -2,10 +2,7 @@ package com.board.domain.board.service;
 
 import com.board.domain.board.dto.requestDTO.BoardUpdateRequestDTO;
 import com.board.domain.board.dto.requestDTO.BoardWriteRequestDTO;
-import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardGetBoardResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
+import com.board.domain.board.dto.responseDTO.*;
 import com.board.domain.board.entity.Board;
 import com.board.domain.board.entity.enumPackage.BoardStatus;
 import com.board.domain.board.repository.BoardCustomRepositoryImpl;
@@ -14,10 +11,7 @@ import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
 import com.board.domain.result.MultipleResult;
 import com.board.domain.result.SingleResult;
-import com.board.exception.BoardNotFoundException;
-import com.board.exception.MemberNotFoundException;
-import com.board.exception.MemberNotWriterException;
-import com.board.exception.ProcessFailureException;
+import com.board.exception.*;
 import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -58,6 +52,7 @@ public class BoardServiceImpl implements BoardService{
 
     // 게시글 수정
     @Override
+    @Transactional
     public BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO) {
         Member member = findMember();
         Board board = findBoardByBoardUUID(boardUUID);
@@ -129,6 +124,25 @@ public class BoardServiceImpl implements BoardService{
                 .build();
     }
 
+    // 게시글 삭제
+    @Override
+    @Transactional
+    public BoardDeleteResponseDTO deleteBoard(UUID boardUUID) {
+        Member member = findMember();
+        Board board = findBoardByBoardUUID(boardUUID);
+
+        // 삭제하려는 게시글 작성자와 로그인한 회원과 동일한지 확인
+        if(board.getWriter().getMemberUUID() != member.getMemberUUID())
+            throw new MemberNotWriterException();
+
+        if (boardRepository.deleteBoardByBoardUUID(boardUUID) != 1)
+            throw new BoardDeleteFailureException();
+
+        return BoardDeleteResponseDTO.builder()
+                .successMSG("삭제 성공")
+                .build();
+    }
+
     // 현재 로그인한 멤버 정보 조회
     public Member findMember() {
         return memberRepository.findByEmail(SecurityUtil.getLoginUsername()).orElseThrow(MemberNotFoundException::new);
@@ -138,4 +152,5 @@ public class BoardServiceImpl implements BoardService{
     public Board findBoardByBoardUUID(UUID boardUUID) {
         return boardRepository.findBoardByBoardUUID(boardUUID).orElseThrow(BoardNotFoundException::new);
     }
+
 }

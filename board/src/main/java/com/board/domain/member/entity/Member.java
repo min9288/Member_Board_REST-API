@@ -58,10 +58,10 @@ public class Member {
     private  Boolean emailAuth;
 
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @JoinColumn(name="memberUUID")
-    private Collection<Board> boardList;
+    private List<Board> boardList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
