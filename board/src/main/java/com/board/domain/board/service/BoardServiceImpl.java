@@ -36,6 +36,7 @@ public class BoardServiceImpl implements BoardService{
     private final BoardCustomRepositoryImpl boardCustomRepositoryImpl;
     private final MemberRepository memberRepository;
 
+    // 게시글 작성
     @Override
     @Transactional
     public BoardWriteResponseDTO insertBoard(BoardWriteRequestDTO requestDTO) throws ProcessFailureException {
@@ -55,9 +56,28 @@ public class BoardServiceImpl implements BoardService{
                 .build();
     }
 
+    // 게시글 수정
     @Override
-    public BoardUpdateResponseDTO updateBoard(BoardUpdateRequestDTO requestDTO) {
-        return null;
+    public BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO) {
+        Member member = findMember();
+        Board board = findBoardByBoardUUID(boardUUID);
+        // 수정하려는 게시글 작성자와 로그인한 회원과 동일한지 확인
+        if(board.getWriter().getMemberUUID() != member.getMemberUUID())
+            throw new MemberNotWriterException();
+
+        board.setTitle(requestDTO.getTitle());
+        board.setContents(requestDTO.getContents());
+        board.setBoardStatus(requestDTO.getBoardStatus());
+        boardRepository.save(board);
+
+        return BoardUpdateResponseDTO.builder()
+                .boardUUID(board.getBoardUUID())
+                .title(board.getTitle())
+                .contents(board.getContents())
+                .writer(board.getWriter().getNickname())
+                .boardStatus(board.getBoardStatus())
+                .updateDate(board.getUpdateDate())
+                .build();
     }
 
     @Override
@@ -76,6 +96,7 @@ public class BoardServiceImpl implements BoardService{
         // 조회할려고 하는 회원 게시글리스트의 작성자와 현재 로그인한 사람과 동일한지 검사
         if(!(member.getEmail().equals(email)))
             throw new MemberNotWriterException();
+
         List<Board> boards = boardCustomRepositoryImpl.findAllMyBoard(email);
         return boards.stream()
                 .map(board -> BoardGetBoardListResponseDTO.createDTO(board))
@@ -92,9 +113,11 @@ public class BoardServiceImpl implements BoardService{
             if (!(board.getWriter().getMemberUUID() == member.getMemberUUID()))
                 throw new MemberNotWriterException();
         }
+
         // 조회수 1 증가
         board.setHit(board.getHit() + 1);
         boardRepository.save(board);
+
         return BoardGetBoardResponseDTO.builder()
                 .boardUUID(board.getBoardUUID())
                 .title(board.getTitle())
@@ -111,7 +134,7 @@ public class BoardServiceImpl implements BoardService{
         return memberRepository.findByEmail(SecurityUtil.getLoginUsername()).orElseThrow(MemberNotFoundException::new);
     }
 
-    // 게시글 제목으로 게시글 정보 조회
+    // 게시글 UUID로 게시글 정보 조회
     public Board findBoardByBoardUUID(UUID boardUUID) {
         return boardRepository.findBoardByBoardUUID(boardUUID).orElseThrow(BoardNotFoundException::new);
     }

@@ -1,8 +1,10 @@
 package com.board.web.controller.board;
 
+import com.board.domain.board.dto.requestDTO.BoardUpdateRequestDTO;
 import com.board.domain.board.dto.requestDTO.BoardWriteRequestDTO;
 import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
 import com.board.domain.board.dto.responseDTO.BoardGetBoardResponseDTO;
+import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
 import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
 import com.board.domain.board.service.BoardService;
 import com.board.domain.response.service.ResponseService;
@@ -47,6 +49,11 @@ public class boardController {
     }
 
     // 게시글 수정
+    @PutMapping("/update/{boardUUID}")
+    public SingleResult<BoardUpdateResponseDTO> updateBoard(@PathVariable("boardUUID") UUID boardUUID,
+                                                            @Valid @RequestBody BoardUpdateRequestDTO requestDTO) {
+        return responseService.getSingleResult(boardService.updateBoard(boardUUID, requestDTO));
+    }
 
     // 게시글 삭제
 }

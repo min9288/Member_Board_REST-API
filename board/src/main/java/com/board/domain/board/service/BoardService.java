@@ -19,7 +19,7 @@ public interface BoardService {
     BoardWriteResponseDTO insertBoard(BoardWriteRequestDTO requestDTO);
 
     // 게시글 삭제
-    BoardUpdateResponseDTO updateBoard(BoardUpdateRequestDTO requestDTO);
+    BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO);
 
     // 게시글 전체 조회
     List<BoardGetBoardListResponseDTO> findAllBoardList();
