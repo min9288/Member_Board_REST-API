@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class BoardGetBoardResponseDTO {
 
+    private UUID boardUUID;
     private String title;
     private String contents;
     private String writer;
@@ -19,8 +21,9 @@ public class BoardGetBoardResponseDTO {
     private BoardStatus boardStatus;
 
     @Builder
-    public BoardGetBoardResponseDTO(String title, String contents, String writer, int hit, LocalDate enrollDate,
+    public BoardGetBoardResponseDTO(UUID boardUUID, String title, String contents, String writer, int hit, LocalDate enrollDate,
             BoardStatus boardStatus) {
+        this.boardUUID = boardUUID;
         this.title = title;
         this.contents = contents;
         this.writer = writer;

@@ -28,5 +28,5 @@ public interface BoardService {
     List<BoardGetBoardListResponseDTO> findAllMyBoardList(String email);
 
     // 게시글 상세 조회
-    BoardGetBoardResponseDTO findBoard(String title);
+    BoardGetBoardResponseDTO findBoard(UUID boardUUID);
 }

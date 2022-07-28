@@ -7,24 +7,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class BoardWriteResponseDTO {
+
+    private UUID boardUUID;
     private String title;
     private String contents;
-    private Member writer;
+    private String writer;
     private BoardStatus boardStatus;
-    private LocalDate enrollDate;
 
     @Builder
-    public BoardWriteResponseDTO(String title, String contents, Member writer, BoardStatus boardStatus,
-                                 LocalDate enrollDate) {
+    public BoardWriteResponseDTO(UUID boardUUID, String title, String contents, String writer, BoardStatus boardStatus) {
+        this.boardUUID = boardUUID;
         this.title = title;
         this.contents = contents;
         this.writer = writer;
         this.boardStatus = boardStatus;
-        this.enrollDate = enrollDate;
     }
 
 

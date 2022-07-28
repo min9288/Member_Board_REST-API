@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,22 +28,22 @@ public class boardController {
         return responseService.getSingleResult(boardService.insertBoard(requestDTO));
     }
 
-    // 게시글 전체 조회
+    // 게시글 전체 조회 (잠금이 안된 게시물만 조회 가능)
     @GetMapping
     public MultipleResult<BoardGetBoardListResponseDTO> findAllBoardList() {
         return responseService.getMultipleResult(boardService.findAllBoardList());
     }
 
-    // 내가 작성한 게시글 전체 조회
+    // 내가 작성한 게시글 전체 조회 (잠금한 게시물 볼 수 있음)
     @GetMapping("/{email}")
     public MultipleResult<BoardGetBoardListResponseDTO> findMyBoardList(@PathVariable("email") String email) {
         return responseService.getMultipleResult(boardService.findAllMyBoardList(email));
     }
 
-    // 게시글 상세 조회 (비밀글은 본인만 조회 가능)
-    @GetMapping("/detail/{title}")
-    public SingleResult<BoardGetBoardResponseDTO> findBoard(@PathVariable("title") String title) {
-        return responseService.getSingleResult(boardService.findBoard(title));
+    // 게시글 상세 조회 (잠금글은 본인만 조회 가능)
+    @GetMapping("/detail/{boardUUID}")
+    public SingleResult<BoardGetBoardResponseDTO> findBoard(@PathVariable("boardUUID") UUID boardUUID) {
+        return responseService.getSingleResult(boardService.findBoard(boardUUID));
     }
 
     // 게시글 수정

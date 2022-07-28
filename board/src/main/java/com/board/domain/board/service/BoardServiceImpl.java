@@ -47,11 +47,11 @@ public class BoardServiceImpl implements BoardService{
                         .build());
         board.confirmWriter(findMember());
         return BoardWriteResponseDTO.builder()
+                .boardUUID(board.getBoardUUID())
                 .title(board.getTitle())
                 .contents(board.getContents())
-                .writer(board.getWriter())
+                .writer(board.getWriter().getNickname())
                 .boardStatus(board.getBoardStatus())
-                .enrollDate(board.getEnrollDate())
                 .build();
     }
 
@@ -84,8 +84,8 @@ public class BoardServiceImpl implements BoardService{
 
     // 게시글 상세보기
     @Override
-    public BoardGetBoardResponseDTO findBoard(String title) {
-        Board board = findBoardByTitle(title);
+    public BoardGetBoardResponseDTO findBoard(UUID boardUUID) {
+        Board board = findBoardByBoardUUID(boardUUID);
         // 게시글 잠금상태가 private 라면, 로그인한 사람과 조회할려는 게시글 작성자와 동일한지 검사
         if(board.getBoardStatus() == BoardStatus.PRIVATE_BOARD) {
             Member member = findMember();
@@ -96,6 +96,7 @@ public class BoardServiceImpl implements BoardService{
         board.setHit(board.getHit() + 1);
         boardRepository.save(board);
         return BoardGetBoardResponseDTO.builder()
+                .boardUUID(board.getBoardUUID())
                 .title(board.getTitle())
                 .contents(board.getContents())
                 .writer(board.getWriter().getNickname())
@@ -111,7 +112,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     // 게시글 제목으로 게시글 정보 조회
-    public Board findBoardByTitle(String title) {
-        return boardRepository.findByTitle(title).orElseThrow(BoardNotFoundException::new);
+    public Board findBoardByBoardUUID(UUID boardUUID) {
+        return boardRepository.findBoardByBoardUUID(boardUUID).orElseThrow(BoardNotFoundException::new);
     }
 }
