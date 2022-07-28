@@ -22,7 +22,10 @@ public interface BoardService {
     BoardUpdateResponseDTO updateBoard(BoardUpdateRequestDTO requestDTO);
 
     // 게시글 전체 조회
-    List<BoardGetBoardListResponseDTO> findAllBoard();
+    List<BoardGetBoardListResponseDTO> findAllBoardList();
+
+    // 내 게시글 전체 조회
+    List<BoardGetBoardListResponseDTO> findAllMyBoardList(String email);
 
     // 게시글 상세 조회
     BoardGetBoardResponseDTO findBoard(UUID boardUUID);

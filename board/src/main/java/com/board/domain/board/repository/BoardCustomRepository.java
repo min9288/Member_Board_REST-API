@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BoardCustomRepository {
     List<Board> findAllBoard();
+
+    List<Board> findAllMyBoard(String email);
 }

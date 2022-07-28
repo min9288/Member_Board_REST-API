@@ -14,9 +14,11 @@ import com.board.domain.member.repository.MemberRepository;
 import com.board.domain.result.MultipleResult;
 import com.board.domain.result.SingleResult;
 import com.board.exception.MemberNotFoundException;
+import com.board.exception.MemberNotWriterException;
 import com.board.exception.ProcessFailureException;
 import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,8 +59,19 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardGetBoardListResponseDTO> findAllBoard() {
+    public List<BoardGetBoardListResponseDTO> findAllBoardList() {
         List<Board> boards = boardCustomRepositoryImpl.findAllBoard();
+        return boards.stream()
+                .map(board -> BoardGetBoardListResponseDTO.createDTO(board))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardGetBoardListResponseDTO> findAllMyBoardList(String email) {
+        Member member = findMember();
+        if(!(member.getEmail().equals(email)))
+            throw new MemberNotWriterException();
+        List<Board> boards = boardCustomRepositoryImpl.findAllMyBoard(email);
         return boards.stream()
                 .map(board -> BoardGetBoardListResponseDTO.createDTO(board))
                 .collect(Collectors.toList());

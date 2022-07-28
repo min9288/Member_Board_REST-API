@@ -70,6 +70,12 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-109, "처리 과정에 오류가 발생했습니다.");
     }
 
+    @ExceptionHandler(MemberNotWriterException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result memberNotWriterException() {
+        return responseService.getFailureResult(-110, "게시글의 작성자가 아닙니다.");
+    }
+
 
 
 }

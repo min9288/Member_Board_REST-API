@@ -28,11 +28,18 @@ public class boardController {
 
     // 게시글 전체 조회
     @GetMapping
-    public MultipleResult<BoardGetBoardListResponseDTO> findAllBoard() {
-        return responseService.getMultipleResult(boardService.findAllBoard());
+    public MultipleResult<BoardGetBoardListResponseDTO> findAllBoardList() {
+        return responseService.getMultipleResult(boardService.findAllBoardList());
     }
 
-    // 게시글 상세 조회 (비밀글 본인만 조회 가능)
+    // 내가 작성한 게시글 전체 조회
+    @GetMapping("/{email}")
+    public MultipleResult<BoardGetBoardListResponseDTO> findMyBoardList(@PathVariable("email") String email) {
+        return responseService.getMultipleResult(boardService.findAllMyBoardList(email));
+    }
+
+    // 게시글 상세 조회 (비밀글은 본인만 조회 가능)
+
 
     // 게시글 수정
 

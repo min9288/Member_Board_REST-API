@@ -28,4 +28,13 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
                 .fetch();
         return boardList;
     }
+
+    @Override
+    public List<Board> findAllMyBoard(String email) {
+        List<Board> boardList = jpaQueryFactory.selectFrom(board)
+                .where(board.writer.email.eq(email))
+                .leftJoin(board.writer, member)
+                .fetch();
+        return boardList;
+    }
 }
