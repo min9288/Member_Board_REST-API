@@ -31,13 +31,13 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public BoardWriteResponseDTO insertBoard(BoardWriteRequestDTO requestDTO) throws ProcessFailureException {
-       Board board = boardRepository.save(
+        Board board = boardRepository.save(
                 Board.builder()
                         .title(requestDTO.getTitle())
                         .contents(requestDTO.getContents())
                         .boardStatus(requestDTO.getBoardStatus())
                         .build());
-       board.confirmWriter(findMember());
+        board.confirmWriter(findMember());
         return BoardWriteResponseDTO.builder()
                 .title(board.getTitle())
                 .contents(board.getContents())
@@ -63,7 +63,6 @@ public class BoardServiceImpl implements BoardService{
     }
 
     public Member findMember() {
-        String email = SecurityUtil.getLoginUsername();
-        return memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
+        return memberRepository.findByEmail(SecurityUtil.getLoginUsername()).orElseThrow(MemberNotFoundException::new);
     }
 }

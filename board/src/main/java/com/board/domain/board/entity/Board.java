@@ -2,7 +2,7 @@ package com.board.domain.board.entity;
 
 import com.board.domain.board.entity.enumPackage.BoardStatus;
 import com.board.domain.member.entity.Member;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +42,8 @@ public class Board {
     private int hit;
 
     // 작성자
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinColumn(name = "memberUUID")
     private Member writer;
 

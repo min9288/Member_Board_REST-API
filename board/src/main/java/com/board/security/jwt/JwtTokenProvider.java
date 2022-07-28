@@ -1,16 +1,15 @@
 package com.board.security.jwt;
 
+import com.board.security.Member.MemberDatails;
+import com.board.security.Member.MemberDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +27,7 @@ public class JwtTokenProvider {
     private long tokenValidTime = 30 * 60 * 1000L; // 30분
     private long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 7; // 7일
 
-    private final UserDetailsService userDetailsService;
+    private final MemberDetailsService memberDetailsService;
 
 
     @PostConstruct
@@ -61,8 +60,8 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getMemberEmail(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        MemberDatails memberDatails = (MemberDatails) memberDetailsService.loadUserByUsername(getMemberEmail(token));
+        return new UsernamePasswordAuthenticationToken(memberDatails, "", memberDatails.getAuthorities());
     }
 
     public String getMemberEmail(String token) {

@@ -99,8 +99,6 @@ public class SignService {
     // 토큰 재발행
     @Transactional
     public TokenResponseDto reIssue(TokenRequestDto requestDto) {
-
-
         if (!jwtTokenProvider.validateTokenExpiration(requestDto.getRefreshToken()))
             throw new InvalidRefreshTokenException();
 

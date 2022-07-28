@@ -2,6 +2,7 @@ package com.board.domain.member.entity;
 
 import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -57,11 +58,12 @@ public class Member {
     private  Boolean emailAuth;
 
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name="memberUUID")
     private Collection<Board> boardList;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
