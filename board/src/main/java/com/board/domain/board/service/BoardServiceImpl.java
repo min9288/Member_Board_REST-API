@@ -7,6 +7,7 @@ import com.board.domain.board.dto.responseDTO.BoardGetBoardResponseDTO;
 import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
 import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
 import com.board.domain.board.entity.Board;
+import com.board.domain.board.repository.BoardCustomRepositoryImpl;
 import com.board.domain.board.repository.BoardRepository;
 import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
@@ -19,13 +20,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
+    private final BoardCustomRepositoryImpl boardCustomRepositoryImpl;
     private final MemberRepository memberRepository;
 
     @Override
@@ -53,8 +57,11 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public BoardGetBoardListResponseDTO findAllBoard() {
-        return null;
+    public List<BoardGetBoardListResponseDTO> findAllBoard() {
+        List<Board> boards = boardCustomRepositoryImpl.findAllBoard();
+        return boards.stream()
+                .map(board -> BoardGetBoardListResponseDTO.createDTO(board))
+                .collect(Collectors.toList());
     }
 
     @Override

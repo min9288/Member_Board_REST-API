@@ -10,6 +10,7 @@ import com.board.domain.board.dto.responseDTO.BoardWriteResponseDTO;
 import com.board.domain.result.MultipleResult;
 import com.board.domain.result.SingleResult;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface BoardService {
@@ -21,7 +22,7 @@ public interface BoardService {
     BoardUpdateResponseDTO updateBoard(BoardUpdateRequestDTO requestDTO);
 
     // 게시글 전체 조회
-    BoardGetBoardListResponseDTO findAllBoard();
+    List<BoardGetBoardListResponseDTO> findAllBoard();
 
     // 게시글 상세 조회
     BoardGetBoardResponseDTO findBoard(UUID boardUUID);
