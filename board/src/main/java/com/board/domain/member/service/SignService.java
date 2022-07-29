@@ -7,6 +7,7 @@ import com.board.domain.email.service.EmailService;
 import com.board.domain.member.dto.requestDTO.MemberLoginRequestDto;
 import com.board.domain.member.dto.requestDTO.MemberRegisterRequestDto;
 import com.board.domain.member.dto.requestDTO.TokenRequestDto;
+import com.board.domain.member.dto.responseDTO.MemberGetInfoResponseDTO;
 import com.board.domain.member.dto.responseDTO.MemberLoginResponseDto;
 import com.board.domain.member.dto.responseDTO.MemberRegisterResponseDto;
 import com.board.domain.member.dto.responseDTO.TokenResponseDto;
@@ -14,6 +15,7 @@ import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
 import com.board.exception.*;
 import com.board.security.jwt.JwtTokenProvider;
+import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -112,7 +114,9 @@ public class SignService {
 
         member.updateRefreshToken(refreshToken);
         return new TokenResponseDto(accessToken, refreshToken);
+
     }
+
 
     public Member findMemberByToken(TokenRequestDto requestDto) {
         Authentication auth = jwtTokenProvider.getAuthentication(requestDto.getAccessToken());
@@ -120,5 +124,6 @@ public class SignService {
         String username = userDetails.getUsername();
         return memberRepository.findByEmail(username).orElseThrow(MemberNotFoundException::new);
     }
+
 
 }

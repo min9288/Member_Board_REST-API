@@ -17,10 +17,10 @@ public class MemberGetInfoResponseDTO {
     private LocalDate enrollDate;
 
     @Builder
-    public MemberGetInfoResponseDTO(Member member) {
-        this.memberUUID = member.getMemberUUID();
-        this.email = member.getEmail();
-        this.nickname = member.getNickname();
-        this.enrollDate = member.getEnrollDate();
+    public MemberGetInfoResponseDTO(UUID memberUUID, String email, String nickname, LocalDate enrollDate) {
+        this.memberUUID = memberUUID;
+        this.email = email;
+        this.nickname = nickname;
+        this.enrollDate = enrollDate;
     }
 }

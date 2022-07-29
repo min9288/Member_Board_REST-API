@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService{
         Member member = findMember();
         Board board = findBoardByBoardUUID(boardUUID);
         // 수정하려는 게시글 작성자와 로그인한 회원과 동일한지 확인
-        if(board.getWriter().getMemberUUID() != member.getMemberUUID())
+        if(!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
             throw new MemberNotWriterException();
 
         board.setTitle(requestDTO.getTitle());
@@ -75,6 +75,7 @@ public class BoardServiceImpl implements BoardService{
                 .build();
     }
 
+    // 게시글 전체보기
     @Override
     public List<BoardGetBoardListResponseDTO> findAllBoardList() {
         List<Board> boards = boardCustomRepositoryImpl.findAllBoard();
@@ -89,7 +90,7 @@ public class BoardServiceImpl implements BoardService{
         Member member = findMember();
 
         // 조회할려고 하는 회원 게시글리스트의 작성자와 현재 로그인한 사람과 동일한지 검사
-        if(!(member.getEmail().equals(email)))
+        if(!member.getEmail().equals(email))
             throw new MemberNotWriterException();
 
         List<Board> boards = boardCustomRepositoryImpl.findAllMyBoard(email);
@@ -105,7 +106,7 @@ public class BoardServiceImpl implements BoardService{
         // 게시글 잠금상태가 private 라면, 로그인한 사람과 조회할려는 게시글 작성자와 동일한지 검사
         if(board.getBoardStatus() == BoardStatus.PRIVATE_BOARD) {
             Member member = findMember();
-            if (!(board.getWriter().getMemberUUID() == member.getMemberUUID()))
+            if (!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
                 throw new MemberNotWriterException();
         }
 
@@ -132,7 +133,7 @@ public class BoardServiceImpl implements BoardService{
         Board board = findBoardByBoardUUID(boardUUID);
 
         // 삭제하려는 게시글 작성자와 로그인한 회원과 동일한지 확인
-        if(board.getWriter().getMemberUUID() != member.getMemberUUID())
+        if(!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
             throw new MemberNotWriterException();
 
         if (boardRepository.deleteBoardByBoardUUID(boardUUID) != 1)

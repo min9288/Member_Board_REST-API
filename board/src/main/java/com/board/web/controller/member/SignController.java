@@ -4,6 +4,7 @@ import com.board.domain.email.dto.requestDTO.EmailAuthRequestDto;
 import com.board.domain.member.dto.requestDTO.MemberLoginRequestDto;
 import com.board.domain.member.dto.requestDTO.MemberRegisterRequestDto;
 import com.board.domain.member.dto.requestDTO.TokenRequestDto;
+import com.board.domain.member.dto.responseDTO.MemberGetInfoResponseDTO;
 import com.board.domain.member.dto.responseDTO.MemberLoginResponseDto;
 import com.board.domain.member.dto.responseDTO.MemberRegisterResponseDto;
 import com.board.domain.member.dto.responseDTO.TokenResponseDto;
@@ -13,6 +14,8 @@ import com.board.domain.result.SingleResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -50,4 +53,6 @@ public class SignController {
         TokenResponseDto responseDto = signService.reIssue(tokenRequestDto);
         return responseService.getSingleResult(responseDto);
     }
+
+
 }
