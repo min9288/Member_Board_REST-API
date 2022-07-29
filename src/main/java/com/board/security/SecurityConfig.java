@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sign/**").permitAll()
                 .antMatchers("/exception/**").permitAll()
                 .antMatchers("/confirm-email").permitAll()
-                .antMatchers("/test").permitAll()
+                .antMatchers("/test/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
