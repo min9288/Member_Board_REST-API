@@ -3,8 +3,6 @@
 spring:
   profiles:
     active: local
-server:
-  port: 8080
 
  # 운영 환경 : set1 / set2
 ---
