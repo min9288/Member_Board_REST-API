@@ -4,9 +4,12 @@ jdk:
 
 branches:
   only:
-    - master
+    - main
 
-// Travis CI 서버 home
+before_script:
+  - cd board/
+
+  // Travis CI 서버 home
 cache:
   directories:
     - '$HOME/.m2/repository'
