@@ -9,7 +9,7 @@ branches:
 before_script:
   - cd board/
 
-  // Travis CI 서버 home
+
 cache:
   directories:
     - '$HOME/.m2/repository'
@@ -17,7 +17,7 @@ cache:
 
 script: "./gradlew clean build"
 
-# CI 실행 완료시 메일로 알람
+
 notifications:
   email:
     recipients:
