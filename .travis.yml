@@ -34,7 +34,7 @@ deploy:
     wait-until-deployed: true
     on:
       repo: min9288/Member_Board_REST-API
-      branch: main
+      all_branches: true
 #    on:
 #      repo: min9288/Member_Board_REST-API
 #      branch: main
