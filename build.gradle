@@ -15,8 +15,14 @@ plugins {
 }
 
 group = 'com'
-version = '0.0.3'
+version = '0.0.1'
 sourceCompatibility = '11'
+
+bootJar{
+    archivesBaseName = 'Member_Board_REST-API'
+    archiveFileName = 'Member_Board_REST-API.jar'
+    archiveVersion = "0.0.1"
+}
 
 configurations {
     compileOnly {
