@@ -32,9 +32,9 @@ deploy:
     acl: public_read
     local_dir: deploy
     wait-until-deployed: true
-    on:
-      repo: min9288/Member_Board_REST-API
-      branch: main
+#    on:
+#      repo: min9288/Member_Board_REST-API
+#      branch: main
 
 notifications:
   email:
