@@ -27,7 +27,7 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: member-board-service-deploy
     region: ap-northeast-2
-    cleanup: false
+    skip_cleanup: true
     acl: public_read
     local_dir: deploy
     wait-until-deployed: true
