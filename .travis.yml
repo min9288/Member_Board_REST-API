@@ -6,10 +6,6 @@ branches:
   only:
     - main
 
-before_script:
-  - cd board/
-
-
 cache:
   directories:
     - '$HOME/.m2/repository'
