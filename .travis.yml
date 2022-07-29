@@ -21,14 +21,13 @@ before_deploy:
   - mkdir -p deploy
   - mv Member_Board_REST-API.zip deploy/Member_Board_REST-API.zip
 
-
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: member-board-service-deploy
     region: ap-northeast-2
-    skip_cleanup: true
+    cleanup: false
     acl: public_read
     local_dir: deploy
     wait-until-deployed: true
