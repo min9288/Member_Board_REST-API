@@ -36,18 +36,18 @@ deploy:
       branch: main
 
   - provider: codedeploy
-      access_key_id: $AWS_ACCESS_KEY
-      secret_access_key: $AWS_SECRET_KEY
-      bucket: member-board-service-deploy
-      key: Member_Board_REST-API.zip
-      bundle_type: zip
-      application: Member_Board_REST-API
-      deployment_group: Member_Board_REST-API-group
-      region: ap-northeast-2
-      wait-until-deployed: true
-      on:
-        repo: min9288/Member_Board_REST-API
-        branch: main
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: member-board-service-deploy
+    key: Member_Board_REST-API.zip
+    bundle_type: zip
+    application: Member_Board_REST-API
+    deployment_group: Member_Board_REST-API-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: min9288/Member_Board_REST-API
+      branch: main
 
 notifications:
   email:
