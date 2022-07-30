@@ -88,5 +88,10 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-112, "삭제에 실패 했습니다.");
     }
 
+    @ExceptionHandler(MemberDoNotUseOtherThingException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result moardDeleteFailureException() {
+        return responseService.getFailureResult(-113, "다른 회원의 정보입니다, 본인의 정보만 조회 가능합니다.");
+    }
 
 }

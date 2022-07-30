@@ -3,6 +3,7 @@ package com.board.domain.member.service;
 import com.board.domain.member.dto.responseDTO.MemberGetInfoResponseDTO;
 import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
+import com.board.exception.MemberDoNotUseOtherThingException;
 import com.board.exception.MemberNotFoundException;
 import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class MemberServiceImpl implements MemberService{
         Member member = findMember();
 
         if(!member.getMemberUUID().equals(memberUUID))
-            throw new MemberNotFoundException();
+            throw new MemberDoNotUseOtherThingException();
 
         return MemberGetInfoResponseDTO.builder()
                 .memberUUID(member.getMemberUUID())
