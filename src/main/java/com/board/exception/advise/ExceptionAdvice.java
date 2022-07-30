@@ -94,4 +94,10 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-113, "다른 회원의 정보입니다, 본인의 정보만 조회 가능합니다.");
     }
 
+    @ExceptionHandler(MemberNicknameAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result memberNicknameAlreadyExistsException() {
+        return responseService.getFailureResult(-114, "이미 존재하는 닉네임 입니다.");
+    }
+
 }

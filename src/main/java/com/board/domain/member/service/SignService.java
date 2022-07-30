@@ -46,6 +46,7 @@ public class SignService {
     @Transactional
     public MemberRegisterResponseDto registerMember(MemberRegisterRequestDto requestDto) {
         validateDuplicated(requestDto.getEmail());
+        validateNicknameDuplicated(requestDto.getNickname());
         EmailAuth emailAuth = emailAuthRepository.save(
                 EmailAuth.builder()
                         .email(requestDto.getEmail())
@@ -74,6 +75,12 @@ public class SignService {
     public void validateDuplicated(String email) {
         if (memberRepository.findByEmail(email).isPresent())
             throw new MemberEmailAlreadyExistsException();
+    }
+
+    // 닉네임 중복 확인
+    public void validateNicknameDuplicated(String nickname) {
+        if (memberRepository.findMemberByNickname(nickname).isPresent())
+            throw new MemberNicknameAlreadyExistsException();
     }
 
     // 이메일 인증
@@ -124,6 +131,5 @@ public class SignService {
         String username = userDetails.getUsername();
         return memberRepository.findByEmail(username).orElseThrow(MemberNotFoundException::new);
     }
-
 
 }
