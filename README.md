@@ -236,7 +236,7 @@ Get
   
 ```bash
 Get 
-* 내가 게시글 전체 조회 : 3.39.20.133/board/{이메일주소}
+* 내가 작성한 게시글 전체 조회 : 3.39.20.133/board/{이메일주소}
 ```
 <p align="center">
 <img src = "./img/myBoardInfo.png" width=100%>
