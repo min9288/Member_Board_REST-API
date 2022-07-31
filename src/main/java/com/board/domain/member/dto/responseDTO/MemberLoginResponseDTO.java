@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberLoginResponseDto {
+public class MemberLoginResponseDTO {
     private UUID memberUUID;
     private String nickname;
     private String token;

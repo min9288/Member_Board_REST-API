@@ -1,21 +1,19 @@
 package com.board.domain.member.service;
 
-import com.board.domain.email.dto.requestDTO.EmailAuthRequestDto;
+import com.board.domain.email.dto.requestDTO.EmailAuthRequestDTO;
 import com.board.domain.email.entity.EmailAuth;
 import com.board.domain.email.repository.EmailAuthRepository;
 import com.board.domain.email.service.EmailService;
-import com.board.domain.member.dto.requestDTO.MemberLoginRequestDto;
-import com.board.domain.member.dto.requestDTO.MemberRegisterRequestDto;
-import com.board.domain.member.dto.requestDTO.TokenRequestDto;
-import com.board.domain.member.dto.responseDTO.MemberGetInfoResponseDTO;
-import com.board.domain.member.dto.responseDTO.MemberLoginResponseDto;
-import com.board.domain.member.dto.responseDTO.MemberRegisterResponseDto;
-import com.board.domain.member.dto.responseDTO.TokenResponseDto;
+import com.board.domain.member.dto.requestDTO.MemberLoginRequestDTO;
+import com.board.domain.member.dto.requestDTO.MemberRegisterRequestDTO;
+import com.board.domain.member.dto.requestDTO.TokenRequestDTO;
+import com.board.domain.member.dto.responseDTO.MemberLoginResponseDTO;
+import com.board.domain.member.dto.responseDTO.MemberRegisterResponseDTO;
+import com.board.domain.member.dto.responseDTO.TokenResponseDTO;
 import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
 import com.board.exception.*;
 import com.board.security.jwt.JwtTokenProvider;
-import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -44,7 +42,7 @@ public class SignService {
 
     // DTO로 들어온 값을 통해 회원가입을 진행
     @Transactional
-    public MemberRegisterResponseDto registerMember(MemberRegisterRequestDto requestDto) {
+    public MemberRegisterResponseDTO registerMember(MemberRegisterRequestDTO requestDto) {
         validateDuplicated(requestDto.getEmail());
         validateNicknameDuplicated(requestDto.getNickname());
         EmailAuth emailAuth = emailAuthRepository.save(
@@ -64,7 +62,7 @@ public class SignService {
                         .build()
         );
         emailService.send(emailAuth.getEmail(), emailAuth.getAuthToken());
-        return MemberRegisterResponseDto.builder()
+        return MemberRegisterResponseDTO.builder()
                 .memberUUID(member.getMemberUUID())
                 .email(member.getEmail())
                 .authToken(emailAuth.getAuthToken())
@@ -85,7 +83,7 @@ public class SignService {
 
     // 이메일 인증
     @Transactional
-    public void confirmEmail(EmailAuthRequestDto requestDto) {
+    public void confirmEmail(EmailAuthRequestDTO requestDto) {
         EmailAuth emailAuth = emailAuthRepository.findValidAuthByEmail(requestDto.getEmail(), requestDto.getAuthToken(), LocalDateTime.now())
                 .orElseThrow(EmailAuthTokenNotFountException::new);
         Member member = memberRepository.findByEmail(requestDto.getEmail()).orElseThrow(MemberNotFoundException::new);
@@ -95,19 +93,19 @@ public class SignService {
 
     // 로그인
     @Transactional
-    public MemberLoginResponseDto loginMember(MemberLoginRequestDto requestDto) {
+    public MemberLoginResponseDTO loginMember(MemberLoginRequestDTO requestDto) {
         Member member = memberRepository.findByEmail(requestDto.getEmail()).orElseThrow(MemberNotFoundException::new);
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword()))
             throw new LoginFailureException();
         if (!member.getEmailAuth())
             throw new EmailNotAuthenticatedException();
         member.updateRefreshToken(jwtTokenProvider.createRefreshToken());
-        return new MemberLoginResponseDto(member.getMemberUUID(), member.getNickname(), jwtTokenProvider.createToken(requestDto.getEmail()), member.getRefreshToken());
+        return new MemberLoginResponseDTO(member.getMemberUUID(), member.getNickname(), jwtTokenProvider.createToken(requestDto.getEmail()), member.getRefreshToken());
     }
 
     // 토큰 재발행
     @Transactional
-    public TokenResponseDto reIssue(TokenRequestDto requestDto) {
+    public TokenResponseDTO reIssue(TokenRequestDTO requestDto) {
         if (!jwtTokenProvider.validateTokenExpiration(requestDto.getRefreshToken()))
             throw new InvalidRefreshTokenException();
 
@@ -120,12 +118,12 @@ public class SignService {
         String refreshToken = jwtTokenProvider.createRefreshToken();
 
         member.updateRefreshToken(refreshToken);
-        return new TokenResponseDto(accessToken, refreshToken);
+        return new TokenResponseDTO(accessToken, refreshToken);
 
     }
 
 
-    public Member findMemberByToken(TokenRequestDto requestDto) {
+    public Member findMemberByToken(TokenRequestDTO requestDto) {
         Authentication auth = jwtTokenProvider.getAuthentication(requestDto.getAccessToken());
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String username = userDetails.getUsername();

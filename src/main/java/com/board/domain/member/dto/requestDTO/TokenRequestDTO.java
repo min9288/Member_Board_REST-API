@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class MemberRegisterRequestDto {
-    private String email;
-    private String password;
-    private String nickname;
+public class TokenRequestDTO {
+    String accessToken;
+    String refreshToken;
 }

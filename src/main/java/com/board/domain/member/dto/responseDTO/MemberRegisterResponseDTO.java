@@ -8,13 +8,13 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class MemberRegisterResponseDto {
+public class MemberRegisterResponseDTO {
     private UUID memberUUID;
     private String email;
     private String authToken;
 
     @Builder
-    public MemberRegisterResponseDto(UUID memberUUID, String email, String authToken, String nickname) {
+    public MemberRegisterResponseDTO(UUID memberUUID, String email, String authToken, String nickname) {
         this.memberUUID = memberUUID;
         this.email = email;
         this.authToken = authToken;

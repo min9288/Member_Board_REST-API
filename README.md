@@ -361,7 +361,7 @@ DELETE
 
 ## Travis & Codedeploy & EC2 (CI/CD, Infra)
 > * Travis CI 와 AWS Codedeploy를 통한 배포 자동화와 Nginx를 통한 무중단 배포를 구축하였습니다.
-> * 배포되는 EC2의 SSH 접근권한은 제 IP만 허용했습니다.
+> * EC2의 SSH 접근권한은 제 IP만 허용했습니다.
 > * 루트 계정이 아닌, IAM 계정에서 사용자를 생성하고 권한 부여를 통해서 보안성을 강화 하였습니다.
 
 
@@ -370,7 +370,7 @@ DELETE
   <img src = "./img/ci&cd.png" width=100%>
 </p>
 
-- EC2에서 Nginx와 스프링부트 JAR 2를 사용하여 무중단 배포를 구현 하였습니다.
+- EC2에서 Nginx와 스프링부트 JAR 2개를 사용하여 무중단 배포를 구현 하였습니다.
 - Nginx에는 80(http), 443(https) 포트를 할당 하였습니다.
 - 스프링부트1(profile : set1)은 8081 포트로, 스프링부트2(profile : set2)은 8082포트로 실행합니다. 
 - Nginx와 연결된 스프링부트1(set1)이 구동 중 일 때, 배포를 하면 Nginx가 바라보고 있지 않은 스프링부트2(set2)에서 배포가 진행됩니다. 
@@ -380,8 +380,116 @@ DELETE
 
 <br/>
 
-## 다이어그램
+## 패키지 구조
 
-<p align="center">
-  <img src = "./img/diagram.png" width=100%>
-</p>
+```bash
+
+domain
+  ㄴ board
+      ㄴ dto
+          ㄴ requestDTO
+              ㄴ BoardUpdateRequestDTO.class
+              ㄴ BoardWriteRequestDTO.class
+          ㄴ responseDTO
+              ㄴ BoardDeleteResponseDTO.class
+              ㄴ BoardGetBoardListResponseDTO.class
+              ㄴ BoardGetBoardResponseDTO.class
+              ㄴ BoardUpdateResponseDTO.class
+              ㄴ BoardWriteResponseDTO.class
+      ㄴ entity
+          ㄴ Board.class
+          ㄴ enumPackage
+              ㄴ BoardStatus.enum
+      ㄴ repository
+          ㄴ BoardCustomRepository.interface
+          ㄴ BoardCustomRepositoryImpl.class
+          ㄴ BoardRepository.interface
+      ㄴ service 
+          ㄴ BoardService.interface
+          ㄴ BoardServiceImpl.class
+  ㄴ email
+      ㄴ dto
+          ㄴ requestDTO
+              ㄴ EmailAuthRequestDTO.class
+      ㄴ entity
+          ㄴ EmailAuth.class
+      ㄴ repository
+          ㄴ EmailAuthCustomRepository.interface
+          ㄴ EmailAuthCustomRepositoryImpl.class
+          ㄴ EmailAuthRepository.interface
+      ㄴ service 
+          ㄴ EmailService.class
+  ㄴ member
+      ㄴ dto
+          ㄴ requestDTO
+              ㄴ MemberLoginRequestDTO.class
+              ㄴ MemberRegisterRequestDTO.class
+              ㄴ TokenRequestDto.class
+          ㄴ responseDTO
+              ㄴ MemberGetInfoResponseDTO.class
+              ㄴ MemberLoginResponseDTO.class
+              ㄴ MemberRegisterResponseDTO.class
+              ㄴ TokenResponseDTO.class
+      ㄴ entity
+          ㄴ Member.class
+          ㄴ enumPackage
+              ㄴ Role.enum
+      ㄴ repository
+          ㄴ MemberRepository.interface
+      ㄴ service 
+          ㄴ MemberService.interface
+          ㄴ MemberServiceImpl.class
+          ㄴ SingService.class
+  ㄴ response
+      ㄴ service 
+          ㄴ ResponseService.class
+  ㄴ response
+      ㄴ service 
+          ㄴ ResponseService.class
+  ㄴ result
+      ㄴ MultipleResult.class
+      ㄴ Result.class
+      ㄴ SingleResult.class
+exception
+  ㄴ AuthenticationEntryPointException.class
+  ㄴ BoardDeleteFailureException.class
+  ㄴ BoardNotFoundException.class
+  ㄴ EmailAuthTokenNotFountException.class
+  ㄴ EmailNotAuthenticatedException.class
+  ㄴ InvalidRefreshTokenException.class
+  ㄴ LoginFailureException.class
+  ㄴ MemberDoNotUseOtherThingException.class
+  ㄴ MemberEmailAlreadyExistsException.class
+  ㄴ MemberNicknameAlreadyExistsException.class
+  ㄴ MemberNotFoundException.class
+  ㄴ MemberNotWriterException.class
+  ㄴ ProcessFailureException.class
+  ㄴ advise
+      ㄴ ExceptionAdvice.class
+security
+  ㄴ accessDeniedHandler
+      ㄴ CustomAccessDeniedHandler.class
+  ㄴ authenticationEntryPoint
+      ㄴ CustomAuthenticationEntryPoint.class
+  ㄴ jwt
+      ㄴ JwtAuthenticationFilter.class
+      ㄴ JwtTokenProvider.class
+  ㄴ member
+      ㄴ MemberDatails.class
+      ㄴ MemberDetailsService.class
+  ㄴ util
+      ㄴ SecurityUtil.class
+  ㄴ SecurityConfig.class
+web
+  ㄴ controller
+      ㄴ board
+          ㄴ BoardController.class
+      ㄴ exception
+          ㄴ ExceptionController.class
+      ㄴ member
+          ㄴ MemberController.class
+          ㄴ SignController.class
+      ㄴ profile
+          ㄴ ProfileController.class
+          
+```
