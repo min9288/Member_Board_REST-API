@@ -1,10 +1,14 @@
 # Member_Board_REST-API [![Build Status](https://app.travis-ci.com/min9288/Member_Board_REST-API.svg?branch=main)](https://app.travis-ci.com/min9288/Member_Board_REST-API)
 > 회원과 게시판 기능이 있는 애플리케이션 서버입니다.
+> 
+> 과금으로 인한 서버 종료로, 클라우드 계정 변경 및 포인트 적립/상품결제 기능을 추가할 예정입니다.
+
 
 </br>
 
 ## 서비스 개요
 > REST API 기반의 게시판 기능 구현 서버입니다.
+
 
 </br>
 
@@ -53,8 +57,9 @@
 </br>
 
 ## 가용 서버
-- 3.39.20.133
-  - 실 사용은 위 서버로 진행할 수 있습니다.
+- ~3.39.20.133~
+  - ~실 사용은 위 서버로 진행할 수 있습니다.~
+  -  과금 문제로 현재 서버가 내려간 상태입니다.
 
 </br>
 
