@@ -4,6 +4,7 @@ import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -59,8 +60,7 @@ public class Member {
 
     // 조인컬럼 (Baord)
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    @JoinColumn(name="memberUUID")
+    @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)

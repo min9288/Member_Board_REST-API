@@ -43,7 +43,7 @@ public class Board {
 
     // 작성자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "memberUUID")
     private Member writer;
 
