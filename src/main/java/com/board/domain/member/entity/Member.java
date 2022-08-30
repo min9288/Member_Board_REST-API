@@ -81,7 +81,6 @@ public class Member {
         boardList.add(board);
     }
 
-
     public void addRole(Role role) {
         this.roles.add(role);
     }

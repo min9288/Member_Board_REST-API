@@ -37,7 +37,7 @@ public class ResponseService {
 
     public void setSuccessResult(Result result) {
         result.setSuccess(true);
-        result.setCode(0);
+        result.setCode(200);
         result.setMsg("성공");
     }
 
