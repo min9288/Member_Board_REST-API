@@ -54,14 +54,12 @@ public class Board {
 
     // 작성일
     @CreationTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @Column(nullable = false, updatable = false)
     private LocalDate enrollDate;
 
     // 수정일
     @UpdateTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate updateDate;
 

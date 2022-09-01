@@ -15,7 +15,8 @@ public class BoardApplication {
 
     public static final String APPLICATION_LOCATIONS = "spring.config.additional-location="
             +"classpath:application.yml,"
-            +"/app/config/Member_Board_REST-API/real-application.yml";
+            +"app/config/Member_Board_REST-API/real-application.yml";
+//            +"/app/config/Member_Board_REST-API/real-application.yml";
 
 //    public static void main(String[] args) {
 //        SpringApplication.run(BoardApplication.class, args);
