@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sign")
+@RequestMapping("/signs")
 public class SignController {
 
     private final SignService signService;
