@@ -39,6 +39,14 @@ public class Member {
     @Column(nullable = false, length = 40)
     private String nickname;
 
+    // 고객 보유 자산
+    @Column
+    private Long money;
+
+    // 적립 포인트
+    @Column
+    private Long point;
+
     // 작성일
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -53,10 +61,17 @@ public class Member {
     private LocalDate updateDate;
 
     // 재발행 토큰
+    @Column
     private String refreshToken;
 
     // 이메일 인증값
+    @Column
     private  Boolean emailAuth;
+
+    // 조인컬럼(Cart)
+//    @Column
+//    private
+
 
     // 조인컬럼 (Baord)
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
