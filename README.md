@@ -45,10 +45,11 @@
 - Spring Boot (API Server)
 - Spring Security (Security)
 - JPA & QueryDSL (ORM)
-- MySQL (8.0 / Naver Cloud DB) (RDB)
+- MySQL (8.0 / Google Cloud SQL) (RDB)
 - AWS EC2 (Infra)
 - AWS S3 (Build Store)
-- Travis CI & AWS Codedeploy (CI/CD)
+- ~Travis CI & AWS Codedeploy (CI/CD)~
+- Git Action & AWS Codedeploy (CI/CD) travis 무료 크레딧 만료로 git action으로 변경
 - Nginx (Reverse Proxy Server)
 - Postman (Documentation)
 - DBeaver (Database tool)
@@ -57,9 +58,8 @@
 </br>
 
 ## 가용 서버
-- ~3.39.20.133~
-  - ~실 사용은 위 서버로 진행할 수 있습니다.~
-  -  과금 문제로 현재 서버가 내려간 상태입니다.
+- 43.200.144.129
+  - 실 사용은 위 서버로 진행할 수 있습니다.
 
 </br>
 
