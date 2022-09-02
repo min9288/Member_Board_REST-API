@@ -13,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "email_auth")
 public class EmailAuth {
 
     private static final Long MAX_EXPIRE_TIME = 5L;
@@ -22,9 +23,15 @@ public class EmailAuth {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column
     private String email;
+
+    @Column(name = "auth_token")
     private String authToken;
+
     private Boolean expired;
+
+    @Column(name = "expire_date")
     private LocalDateTime expireDate;
 
     @Builder

@@ -26,7 +26,7 @@ public class Board {
     // 게시글 PK
     @Id @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)", name = "board_uuid")
     private UUID boardUUID;
 
     // 게시글 제목
@@ -44,26 +44,27 @@ public class Board {
     // 작성자
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "memberUUID")
+    @JoinColumn(name = "member_uuid")
     private Member writer;
 
     // 잠금 유무
     @Enumerated(EnumType.STRING)
-    @Column(name = "boardStatus")
+    @Column(name = "board_status")
     private BoardStatus boardStatus;
 
     // 작성일
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "enroll_date")
     private LocalDate enrollDate;
 
     // 수정일
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @Column(name = "update_date")
     private LocalDate updateDate;
 
-    // 작성자 확인 메서드
+    // 회원 연관관계 메서드
     public void confirmWriter(Member writer) {
         this.writer = writer;
         writer.addBoard(this);

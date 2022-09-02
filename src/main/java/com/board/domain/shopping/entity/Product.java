@@ -1,11 +1,21 @@
 package com.board.domain.shopping.entity;
 
+import com.board.domain.shopping.entity.enumPackage.Category;
+import com.board.domain.shopping.entity.enumPackage.Vander;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -18,24 +28,65 @@ public class Product {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)", name = "product_uuid")
     private UUID productUUID;
 
+    // 카테고리
+    @Enumerated
+    @Column
+    private Category category;
+
     // 상품명
+    @Column(nullable = false)
+    private String name;
 
     // 가격
+    @Column(nullable = false)
+    private int price;
 
     // 재고 수량
+    @Column
+    private int quantity;
 
     // 포인트 비율
+    @Column(nullable = false, name = "point_rate")
+    private Double pointRate;
 
     // 밴더사
+    @Enumerated
+    @Column(nullable = false)
+    private Vander vander;
 
     // 등록일
+    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @Column(nullable = false, updatable = false, name = "enroll_date")
+    private LocalDate enrollDate;
 
     // 수정일
+    @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @Column(name = "update_date")
+    private LocalDate updateDate;
 
-    // 장바구니 매핑
+    // 주문 매핑
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Order> orderList = new ArrayList<>();
 
+    @Builder
+    public Product(Category category, String name, int price, int quantity, Double pointRate, Vander vander) {
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.pointRate = pointRate;
+        this.vander = vander;
+    }
+
+    // 주문 연관관계 메서드
+    public void addOrder(Order order) {
+        orderList.add(order);
+    }
 
 }

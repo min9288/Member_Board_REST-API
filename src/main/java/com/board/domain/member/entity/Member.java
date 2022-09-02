@@ -2,10 +2,12 @@ package com.board.domain.member.entity;
 
 import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
+import com.board.domain.shopping.entity.Cart;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,7 +26,7 @@ public class Member {
     // 회원 PK
     @Id @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)", name = "member_uuid")
     private UUID memberUUID;
 
     // 회원 아이디
@@ -40,41 +42,35 @@ public class Member {
     private String nickname;
 
     // 고객 보유 자산
-    @Column
-    private Long money;
+    @ColumnDefault("0")
+    private int money;
 
     // 적립 포인트
-    @Column
-    private Long point;
+    @ColumnDefault("0")
+    private int point;
 
     // 작성일
     @CreationTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "enroll_date")
     private LocalDate enrollDate;
 
     // 수정일
     @UpdateTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @Column(name = "update_date")
     private LocalDate updateDate;
 
     // 재발행 토큰
-    @Column
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     // 이메일 인증값
-    @Column
+    @Column(name = "email_auth")
     private  Boolean emailAuth;
 
-    // 조인컬럼(Cart)
-//    @Column
-//    private
-
-
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 
