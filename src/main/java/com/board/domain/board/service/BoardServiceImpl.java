@@ -48,6 +48,30 @@ public class BoardServiceImpl implements BoardService{
     }
 
     // 게시글 수정
+//    @Override
+//    @Transactional
+//    public BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO) {
+//        Member member = findMember();
+//        Board board = findBoardByBoardUUID(boardUUID);
+//        // 수정하려는 게시글 작성자와 로그인한 회원과 동일한지 확인
+//        if(!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
+//            throw new MemberNotWriterException();
+//
+//        board.setTitle(requestDTO.getTitle());
+//        board.setContents(requestDTO.getContents());
+//        board.setBoardStatus(requestDTO.getBoardStatus());
+//        boardRepository.save(board);
+//
+//        return BoardUpdateResponseDTO.builder()
+//                .boardUUID(board.getBoardUUID())
+//                .title(board.getTitle())
+//                .contents(board.getContents())
+//                .writer(board.getWriter().getNickname())
+//                .boardStatus(board.getBoardStatus())
+//                .updateDate(board.getUpdateDate())
+//                .build();
+//    }
+
     @Override
     @Transactional
     public BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO) {
@@ -57,10 +81,7 @@ public class BoardServiceImpl implements BoardService{
         if(!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
             throw new MemberNotWriterException();
 
-        board.setTitle(requestDTO.getTitle());
-        board.setContents(requestDTO.getContents());
-        board.setBoardStatus(requestDTO.getBoardStatus());
-        boardRepository.save(board);
+        board = board.update(requestDTO.toEntity());
 
         return BoardUpdateResponseDTO.builder()
                 .boardUUID(board.getBoardUUID())

@@ -64,17 +64,25 @@ public class Board {
     @Column(name = "update_date")
     private LocalDate updateDate;
 
+
     // 회원 연관관계 메서드
     public void confirmWriter(Member writer) {
         this.writer = writer;
         writer.addBoard(this);
     }
-
+    
     @Builder
-    public Board(String title, String contents, Member writer, BoardStatus boardStatus) {
+    public Board(String title, String contents, BoardStatus boardStatus) {
         this.title = title;
         this.contents = contents;
         this.boardStatus = boardStatus;
+    }
+
+    public Board update(Board board) {
+        this.title = board.title;
+        this.contents = board.contents;
+        this.boardStatus = board.boardStatus;
+        return this;
     }
 
 }

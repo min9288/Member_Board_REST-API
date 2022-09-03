@@ -11,4 +11,5 @@ public class BoardWriteRequestDTO {
     private String title;
     private String contents;
     private BoardStatus boardStatus;
+
 }
