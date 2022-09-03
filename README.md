@@ -1,7 +1,7 @@
 # Member_Board_REST-API [![Build Status](https://app.travis-ci.com/min9288/Member_Board_REST-API.svg?branch=main)](https://app.travis-ci.com/min9288/Member_Board_REST-API)
 > 회원과 게시판 기능이 있는 애플리케이션 서버입니다.
 > 
-> 과금으로 인한 서버 종료로, 클라우드 계정 변경 및 포인트 적립/상품결제 기능을 추가할 예정입니다.
+> 기존 코드 리펙토링 및 포인트 적립/상품결제 기능을 추가하는 중입니다.
 
 
 </br>
