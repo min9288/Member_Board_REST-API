@@ -12,6 +12,8 @@ permissions:
 
 hooks:
   AfterInstall:
-    - location: execute-deploy.sh
+    - location: /home/ec2-user/app/nonstop/deploy.sh
       timeout: 180
       runas: ec2-user
+
+#        - location: execute-deploy.sh
