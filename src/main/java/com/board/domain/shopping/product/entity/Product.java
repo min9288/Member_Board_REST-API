@@ -1,7 +1,8 @@
-package com.board.domain.shopping.entity;
+package com.board.domain.shopping.product.entity;
 
-import com.board.domain.shopping.entity.enumPackage.Category;
-import com.board.domain.shopping.entity.enumPackage.Vander;
+import com.board.domain.shopping.order.entity.Order;
+import com.board.domain.shopping.product.entity.enumPackage.Category;
+import com.board.domain.shopping.product.entity.enumPackage.Vander;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class Product {
     private UUID productUUID;
 
     // 카테고리
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column
     private Category category;
 
@@ -53,7 +54,7 @@ public class Product {
     private Double pointRate;
 
     // 밴더사
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Vander vander;
 
@@ -69,10 +70,6 @@ public class Product {
     @Column(name = "update_date")
     private LocalDate updateDate;
 
-    // 주문 매핑
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Order> orderList = new ArrayList<>();
 
     @Builder
     public Product(Category category, String name, int price, int quantity, Double pointRate, Vander vander) {
@@ -82,11 +79,6 @@ public class Product {
         this.quantity = quantity;
         this.pointRate = pointRate;
         this.vander = vander;
-    }
-
-    // 주문 연관관계 메서드
-    public void addOrder(Order order) {
-        orderList.add(order);
     }
 
 }

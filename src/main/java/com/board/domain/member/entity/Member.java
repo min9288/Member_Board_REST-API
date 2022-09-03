@@ -2,8 +2,7 @@ package com.board.domain.member.entity;
 
 import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
-import com.board.domain.shopping.entity.Cart;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.board.domain.shopping.order.entity.Order;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -41,10 +39,6 @@ public class Member {
     @Column(nullable = false, length = 40)
     private String nickname;
 
-    // 고객 보유 자산
-    @ColumnDefault("0")
-    private int money;
-
     // 적립 포인트
     @ColumnDefault("0")
     private int point;
@@ -70,7 +64,7 @@ public class Member {
     private  Boolean emailAuth;
 
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package com.board.domain.shopping.entity.enumPackage;
+package com.board.domain.shopping.product.entity.enumPackage;
 
 public enum Category {
     FOOD,
