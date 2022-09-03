@@ -28,6 +28,7 @@ public class BoardApplication {
                         .run(args);
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
