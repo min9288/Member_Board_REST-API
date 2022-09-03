@@ -4,16 +4,8 @@ files:
   - source:  /
     destination: /home/ec2-user/app/nonstop/Member_Board_REST-API/
 
-permissions:
-  - object: /
-    pattern: "**"
-    owner: ec2-user
-    group: ec2-user
-
 hooks:
   AfterInstall:
-    - location: /home/ec2-user/app/nonstop/deploy.sh
+    - location: execute-deploy.sh
       timeout: 180
       runas: ec2-user
-
-#        - location: execute-deploy.sh
