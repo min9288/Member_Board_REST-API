@@ -22,7 +22,7 @@ public class BoardController {
     private final BoardService boardService;
 
     // 게시글 작성
-    @PostMapping("/write")
+    @PostMapping
     public SingleResult<BoardWriteResponseDTO> insertBoard(@Valid @RequestBody BoardWriteRequestDTO requestDTO) {
         return responseService.getSingleResult(boardService.insertBoard(requestDTO));
     }
@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     // 게시글 수정
-    @PutMapping("/update/{boardUUID}")
+    @PutMapping ("/{boardUUID}")
     public SingleResult<BoardUpdateResponseDTO> updateBoard(@PathVariable("boardUUID") UUID boardUUID,
                                                             @Valid @RequestBody BoardUpdateRequestDTO requestDTO) {
         return responseService.getSingleResult(boardService.updateBoard(boardUUID, requestDTO));
