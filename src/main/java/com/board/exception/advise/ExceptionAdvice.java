@@ -100,4 +100,11 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-400, "이미 존재하는 닉네임 입니다.");
     }
 
+    @ExceptionHandler(ProductNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result productNotFoundException() {
+        return responseService.getFailureResult(-404, "상품 정보를 찾을 수 없습니다.");
+    }
+
+
 }

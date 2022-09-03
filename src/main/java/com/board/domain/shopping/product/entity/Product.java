@@ -51,7 +51,7 @@ public class Product {
 
     // 포인트 비율
     @Column(nullable = false, name = "point_rate")
-    private Double pointRate;
+    private double pointRate;
 
     // 밴더사
     @Enumerated(EnumType.STRING)
@@ -72,7 +72,7 @@ public class Product {
 
 
     @Builder
-    public Product(Category category, String name, int price, int quantity, Double pointRate, Vander vander) {
+    public Product(Category category, String name, int price, int quantity, double pointRate, Vander vander) {
         this.category = category;
         this.name = name;
         this.price = price;

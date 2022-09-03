@@ -9,12 +9,9 @@ import com.board.domain.board.repository.BoardCustomRepositoryImpl;
 import com.board.domain.board.repository.BoardRepository;
 import com.board.domain.member.entity.Member;
 import com.board.domain.member.repository.MemberRepository;
-import com.board.domain.result.MultipleResult;
-import com.board.domain.result.SingleResult;
 import com.board.exception.*;
 import com.board.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +71,7 @@ public class BoardServiceImpl implements BoardService{
                 .updateDate(board.getUpdateDate())
                 .build();
     }
+
 
     // 게시글 전체보기
     @Override
