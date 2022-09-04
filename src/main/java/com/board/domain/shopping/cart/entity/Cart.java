@@ -47,48 +47,4 @@ public class Cart {
         this.member = member;
     }
 
-
-
-
-
-
-
-
-//    //  Order 매핑
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
-//    private List<Order> orderList = new ArrayList<>();
-
-
-//    // 카트아이템 값 타입 컬렉션 매핑
-//    @ElementCollection
-//    @CollectionTable(name = "cart_item")
-//    @MapKeyColumn(name = "map_key")
-//    private Map<UUID, CartItem> cartItemMap = new HashMap<>();
-//
-//    public Cart(Member member) {
-//        this.member = member;
-//    }
-//
-//    public void addProductToCart(int quantity, CartItem cartItem) {
-//        verifyEnoughStockQuantity(quantity, cartItem.getOrderCount());
-//
-//        UUID mapKey = cartItem.getProductUUID();
-//
-//        if (cartItemMap.containsKey(mapKey)) {
-//            cartItem = cartItemMap.get(cartItem.getProductUUID());
-//            int newOrderCount = cartItem.getOrderCount() + cartItem.getOrderCount();
-//            cartItemMap.replace(mapKey, new CartItem(cartUUID, cartItem.getProductUUID(), newOrderCount));
-//        } else {
-//            cartItemMap.put(mapKey, cartItem);
-//        }
-//    }
-//
-//    private void verifyEnoughStockQuantity(int quantity, int orderCount) {
-//        if (orderCount > quantity) {
-//            throw new NotEnoughStockQuantityException();
-//        }
-//    }
-
-
 }

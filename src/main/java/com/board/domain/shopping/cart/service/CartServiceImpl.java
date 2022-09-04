@@ -11,6 +11,7 @@ import com.board.domain.shopping.cart.repository.cart.CartRepository;
 import com.board.domain.shopping.cart.repository.cartItem.CartItemRepository;
 import com.board.domain.shopping.product.entity.Product;
 import com.board.domain.shopping.product.repository.ProductRepository;
+import com.board.exception.AlreadyExistingProductException;
 import com.board.exception.CustomAccessDeniedException;
 import com.board.exception.MemberNotFoundException;
 import com.board.exception.ProductNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,6 +58,14 @@ public class CartServiceImpl implements CartService{
                             .build());
         }
 
+        List<CartItem> cartItemList = cartItemRepository.findAllByCart(findCart);
+        if(!cartItemList.isEmpty()){
+            for (CartItem cartItem : cartItemList) {
+                if(cartItem.getProduct().getProductUUID() == reqeustDTO.getProductUUID())
+                    throw new AlreadyExistingProductException();
+            }
+        }
+
         // 장바구니 상품 추가
         CartItem cartItem = cartItemRepository.save(CartItem.builder()
                         .cart(findCart)
@@ -63,11 +73,13 @@ public class CartServiceImpl implements CartService{
                         .orderCount(reqeustDTO.getOrderCount())
                         .build());
 
+        System.out.println(findCart.getTotalPrice());
+
         // 장바구니 총 금액 변경
         findCart.setTotalPrice(findCart.getTotalPrice() + (findProduct.getPrice() * reqeustDTO.getOrderCount()));
         findCart = cartRepository.save(findCart);
 
-        List<CartItem> cartItemList = cartItemRepository.findAllByCart(findCart);
+        cartItemList = cartItemRepository.findAllByCart(findCart);
 
         return cartItemList.stream()
                         .map(cartItem1 -> CartGetCartItemResponseDTO.createDTO(cartItem1))
@@ -143,10 +155,15 @@ public class CartServiceImpl implements CartService{
 
         cartItemRepository.delete(cartItem);
 
+        int deleteBeforeCartItemPrice = cartItem.getProduct().getPrice() * cartItem.getOrderCount();
+        cart.setTotalPrice(cart.getTotalPrice() - deleteBeforeCartItemPrice);
+        cartRepository.save(cart);
+
         return "선택 삭제 성공";
 
     }
 
+    // 장바구니 상품 전체 삭제
     @Transactional
     @Override
     public String deleteAllCartItem() {
@@ -157,6 +174,8 @@ public class CartServiceImpl implements CartService{
         for(CartItem cartItem : cartItemList) {
             cartItemRepository.delete(cartItem);
         }
+        cart.setTotalPrice(0);
+        cartRepository.save(cart);
 
         return "전체 삭제 성공";
     }

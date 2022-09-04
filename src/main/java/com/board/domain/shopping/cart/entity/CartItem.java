@@ -26,15 +26,15 @@ public class CartItem {
     @Column(columnDefinition = "BINARY(16)", name = "cart_item_uuid")
     private UUID cartItemUUID;
 
-    // cart 매핑
+    // 장바구니 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "cart_uuid")
     private Cart cart;
 
-    // product 매핑
+    // 상품 매핑
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_uuid")
+    @JoinColumn(name = "product_uuid", unique = true)
     private Product product;
 
     // 구매수량
@@ -66,9 +66,7 @@ public class CartItem {
     }
 
     public CartItem update(CartItem cartItem) {
-
         this.orderCount = cartItem.orderCount;
-
         return this;
     }
 

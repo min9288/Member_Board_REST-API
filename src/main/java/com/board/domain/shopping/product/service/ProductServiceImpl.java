@@ -1,8 +1,5 @@
 package com.board.domain.shopping.product.service;
 
-import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
-import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
-import com.board.domain.board.entity.Board;
 import com.board.domain.shopping.product.dto.requestDTO.ProductAddRequestDTO;
 import com.board.domain.shopping.product.dto.requestDTO.ProductUpdateRequestDTO;
 import com.board.domain.shopping.product.dto.responseDTO.ProductAddResponseDTO;
@@ -11,9 +8,8 @@ import com.board.domain.shopping.product.dto.responseDTO.ProductUpdateResponseDT
 import com.board.domain.shopping.product.entity.Product;
 import com.board.domain.shopping.product.entity.enumPackage.Category;
 import com.board.domain.shopping.product.entity.enumPackage.Vander;
-import com.board.domain.shopping.product.repository.ProductCustomRepositoryImpl;
 import com.board.domain.shopping.product.repository.ProductRepository;
-import com.board.exception.MemberNotFoundException;
+import com.board.exception.AlreadyExistingProductException;
 import com.board.exception.ProcessFailureException;
 import com.board.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +28,20 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
-    private final ProductCustomRepositoryImpl productCustomRepository;
 
     // 상품 등록
     @Transactional
     @Override
     public ProductAddResponseDTO addProduct(ProductAddRequestDTO requestDTO) {
+
+        List<Product> productList = productRepository.findAll();
+
+        if(!productList.isEmpty()) {
+            for (Product product : productList) {
+                if(product.getVander() == requestDTO.getVander() && product.getName() == requestDTO.getName())
+                    throw new AlreadyExistingProductException();
+            }
+        }
 
         Product product = productRepository.save(Product.builder()
                 .category(requestDTO.getCategory())

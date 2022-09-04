@@ -120,5 +120,23 @@ public class ExceptionAdvice {
         return responseService.getFailureResult(-401, "권한이 없습니다.");
     }
 
+    @ExceptionHandler(AssetsNotEnoughException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result assetsNotEnoughException(){
+        return responseService.getFailureResult(-415, "보유 자산이 부족하여 결제 실패하였습니다.");
+    }
+
+    @ExceptionHandler(OrderNotExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result orderNotExistException(){
+        return responseService.getFailureResult(-400, "주문 내역이 없습니다.");
+    }
+
+    @ExceptionHandler(AlreadyExistingProductException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result alreadyExistingProductException(){
+        return responseService.getFailureResult(-400, "이미 존재하는 상품입니다.");
+    }
+
 
 }

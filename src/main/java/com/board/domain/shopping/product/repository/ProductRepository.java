@@ -6,10 +6,9 @@ import com.board.domain.shopping.product.entity.enumPackage.Vander;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-public interface ProductRepository extends JpaRepository<Product, UUID>, ProductCustomRepository{
+public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     List<Product> findByCategory(Category category);
 

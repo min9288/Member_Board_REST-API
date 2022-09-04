@@ -1,13 +1,11 @@
 package com.board.domain.board.repository;
 
 import com.board.domain.board.entity.Board;
-import com.board.domain.board.entity.QBoard;
 import com.board.domain.board.entity.enumPackage.BoardStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static com.board.domain.board.entity.QBoard.board;
