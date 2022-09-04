@@ -81,4 +81,14 @@ public class Product {
         this.vander = vander;
     }
 
+    public Product update(Product product) {
+        this.category = product.category;
+        this.name = product.name;
+        this.price = product.price;
+        this.quantity = product.quantity;
+        this.pointRate = product.pointRate;
+        this.vander = product.vander;
+        return this;
+    }
+
 }

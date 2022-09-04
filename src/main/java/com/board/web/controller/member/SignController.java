@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class SignController {
 
     // 회원가입
     @PostMapping("/register")
-    public SingleResult<MemberRegisterResponseDTO> register(@RequestBody MemberRegisterRequestDTO requestDto) {
+    public SingleResult<MemberRegisterResponseDTO> register(@RequestBody @Valid MemberRegisterRequestDTO requestDto) {
         MemberRegisterResponseDTO responseDto = signService.registerMember(requestDto);
         return responseService.getSingleResult(responseDto);
     }
@@ -39,14 +41,14 @@ public class SignController {
 
     // 로그인
     @PostMapping("/login")
-    public SingleResult<MemberLoginResponseDTO> login(@RequestBody MemberLoginRequestDTO requestDto) {
+    public SingleResult<MemberLoginResponseDTO> login(@RequestBody @Valid MemberLoginRequestDTO requestDto) {
         MemberLoginResponseDTO responseDto = signService.loginMember(requestDto);
         return responseService.getSingleResult(responseDto);
     }
 
     // 토큰 재발행
     @PostMapping("/reissue")
-    public SingleResult<TokenResponseDTO> reIssue(@RequestBody TokenRequestDTO tokenRequestDto) {
+    public SingleResult<TokenResponseDTO> reIssue(@RequestBody @Valid TokenRequestDTO tokenRequestDto) {
         TokenResponseDTO responseDto = signService.reIssue(tokenRequestDto);
         return responseService.getSingleResult(responseDto);
     }

@@ -1,9 +1,13 @@
 package com.board.domain.shopping.product.service;
 
 import com.board.domain.board.dto.responseDTO.BoardGetBoardListResponseDTO;
+import com.board.domain.board.dto.responseDTO.BoardUpdateResponseDTO;
+import com.board.domain.board.entity.Board;
 import com.board.domain.shopping.product.dto.requestDTO.ProductAddRequestDTO;
+import com.board.domain.shopping.product.dto.requestDTO.ProductUpdateRequestDTO;
 import com.board.domain.shopping.product.dto.responseDTO.ProductAddResponseDTO;
 import com.board.domain.shopping.product.dto.responseDTO.ProductGetProductListResponseDTO;
+import com.board.domain.shopping.product.dto.responseDTO.ProductUpdateResponseDTO;
 import com.board.domain.shopping.product.entity.Product;
 import com.board.domain.shopping.product.entity.enumPackage.Category;
 import com.board.domain.shopping.product.entity.enumPackage.Vander;
@@ -52,7 +56,25 @@ public class ProductServiceImpl implements ProductService{
                 .quantity(product.getQuantity())
                 .pointRate(product.getPointRate())
                 .vander(product.getVander())
-                .enrollDate(product.getEnrollDate())
+                .enrollDate(product.getEnrollDate().now())
+                .build();
+    }
+
+    // 상품 수정
+    @Transactional
+    @Override
+    public ProductUpdateResponseDTO updateProduct(UUID productUUID, ProductUpdateRequestDTO requestDTO) {
+
+        Product product = productRepository.findById(productUUID).orElseThrow(ProductNotFoundException::new);
+        product = product.update(requestDTO.toEntity());
+
+        return ProductUpdateResponseDTO.builder()
+                .category(product.getCategory())
+                .name(product.getName())
+                .price(product.getPrice())
+                .quantity(product.getQuantity())
+                .pointRate(product.getPointRate())
+                .vander(product.getVander())
                 .build();
     }
 
@@ -67,7 +89,7 @@ public class ProductServiceImpl implements ProductService{
 
     // 상품 카테고리로 조회
     @Override
-    public List<ProductGetProductListResponseDTO> getProductCategory(Category category) {
+    public List<ProductGetProductListResponseDTO> getProductsByCategory(Category category) {
         List<Product> productList = new ArrayList<>();
         try {
             productList = productRepository.findByCategory(category);
@@ -81,7 +103,7 @@ public class ProductServiceImpl implements ProductService{
 
     // 상품 벤더사로 조회
     @Override
-    public List<ProductGetProductListResponseDTO> getProductVander(Vander vander) {
+    public List<ProductGetProductListResponseDTO> getProductsByVander(Vander vander) {
         List<Product> productList = new ArrayList<>();
         try {
             productList = productRepository.findByVander(vander);
@@ -95,7 +117,7 @@ public class ProductServiceImpl implements ProductService{
 
     // 상품 이름으로 조회
     @Override
-    public List<ProductGetProductListResponseDTO> getProductName(String name) {
+    public List<ProductGetProductListResponseDTO> getProductsByName(String name) {
         List<Product> productList = new ArrayList<>();
         try {
             productList = productRepository.findByName(name);
@@ -109,16 +131,21 @@ public class ProductServiceImpl implements ProductService{
 
     // 상품 pk로 조회
     @Override
-    public List<ProductGetProductListResponseDTO> getProductUUID(UUID productUUID) {
-        List<Product> productList = new ArrayList<>();
-        try {
-            productList = productRepository.findByProductUUID(productUUID);
-        } catch (Exception e) {
-            throw new ProductNotFoundException();
-        }
-        return productList.stream()
-                .map(product -> ProductGetProductListResponseDTO.createDTO(product))
-                .collect(Collectors.toList());
+    public ProductGetProductListResponseDTO getProductByProductUUID(UUID productUUID) {
+
+        Product product = productRepository.findById(productUUID).orElseThrow(ProductNotFoundException::new);
+
+        return ProductGetProductListResponseDTO.builder()
+                .productUUID(product.getProductUUID())
+                .category(product.getCategory())
+                .name(product.getName())
+                .price(product.getPrice())
+                .quantity(product.getQuantity())
+                .pointRate(product.getPointRate())
+                .vander(product.getVander())
+                .enrollDate(product.getEnrollDate())
+                .updateDate(product.getUpdateDate())
+                .build();
     }
 
     @Transactional
@@ -132,4 +159,5 @@ public class ProductServiceImpl implements ProductService{
         }
         return "상품을 삭제했습니다.";
     }
+
 }

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
@@ -72,6 +73,7 @@ public class BoardServiceImpl implements BoardService{
 //                .build();
 //    }
 
+    // 게시글 수정
     @Override
     @Transactional
     public BoardUpdateResponseDTO updateBoard(UUID boardUUID, BoardUpdateRequestDTO requestDTO) {
@@ -155,6 +157,7 @@ public class BoardServiceImpl implements BoardService{
         if(!board.getWriter().getMemberUUID().equals(member.getMemberUUID()))
             throw new MemberNotWriterException();
 
+        // 삭제 진행
         if (boardRepository.deleteBoardByBoardUUID(boardUUID) != 1)
             throw new BoardDeleteFailureException();
 

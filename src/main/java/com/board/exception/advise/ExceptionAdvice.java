@@ -107,4 +107,18 @@ public class ExceptionAdvice {
     }
 
 
+    @ExceptionHandler(NotEnoughStockQuantityException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result notEnoughStockQuantityException() {
+        return responseService.getFailureResult(-400, "재고량이 충분하지 않습니다.");
+    }
+
+
+    @ExceptionHandler(CustomAccessDeniedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result customAccessDeniedException(){
+        return responseService.getFailureResult(-401, "권한이 없습니다.");
+    }
+
+
 }

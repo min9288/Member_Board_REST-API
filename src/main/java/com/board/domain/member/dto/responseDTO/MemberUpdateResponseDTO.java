@@ -1,7 +1,5 @@
 package com.board.domain.member.dto.responseDTO;
 
-import com.board.domain.member.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,22 +9,24 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class MemberGetInfoResponseDTO {
+public class MemberUpdateResponseDTO {
+
     private UUID memberUUID;
     private String email;
     private String nickname;
     private int money;
     private int point;
     private LocalDate enrollDate;
+    private LocalDate updateDate;
 
     @Builder
-    public MemberGetInfoResponseDTO(UUID memberUUID, String email, String nickname, int money, int point, LocalDate enrollDate) {
+    public MemberUpdateResponseDTO(UUID memberUUID, String email, String nickname, int money, int point, LocalDate enrollDate, LocalDate updateDate) {
         this.memberUUID = memberUUID;
         this.email = email;
         this.nickname = nickname;
         this.money = money;
         this.point = point;
         this.enrollDate = enrollDate;
+        this.updateDate = updateDate;
     }
-
 }

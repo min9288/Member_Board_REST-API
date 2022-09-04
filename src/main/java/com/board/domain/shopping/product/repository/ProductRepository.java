@@ -17,6 +17,5 @@ public interface ProductRepository extends JpaRepository<Product, UUID>, Product
 
     List<Product> findByVander(Vander vander);
 
-    List<Product> findByProductUUID(UUID productUUID);
 
 }

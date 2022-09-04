@@ -3,6 +3,7 @@ package com.board.domain.member.entity;
 import com.board.domain.board.entity.Board;
 import com.board.domain.member.entity.enumPackage.Role;
 import com.board.domain.shopping.order.entity.Order;
+import com.board.domain.shopping.product.entity.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -38,6 +39,10 @@ public class Member {
     // 닉네임
     @Column(nullable = false, length = 40)
     private String nickname;
+
+    // 적립 포인트
+    @ColumnDefault("0")
+    private int money;
 
     // 적립 포인트
     @ColumnDefault("0")
@@ -81,6 +86,12 @@ public class Member {
         this.emailAuth = emailAuth;
     }
 
+    @Builder
+    public Member(String nickname, int money) {
+        this.nickname = nickname;
+        this.money = money;
+    }
+
     // 게시글 연관관계 메서드
     public void addBoard(Board board) {
         boardList.add(board);
@@ -96,6 +107,12 @@ public class Member {
 
     public void emailVerifiedCheck() {
         this.emailAuth = true;
+    }
+
+    public Member update(Member member) {
+        this.nickname = member.nickname;
+        this.money = member.money;
+        return this;
     }
 
 }
