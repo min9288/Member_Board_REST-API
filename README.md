@@ -1,7 +1,8 @@
-# Member_Board_REST-API
+bnㄱ# Member_Board_REST-API
 > 회원과 게시판 / 쇼핑 기능이 있는 애플리케이션 서버입니다.
 > 
 > 기존의 회원-게시판 기능에서 쇼핑 기능을 추가하였습니다.
+>
 > 지속적으로 기존 코드에 대한 리펙토링을 진행 중 입니다.
 
 
@@ -119,6 +120,85 @@
 - `IntelliJ (Development tool)`
 
 </br>
+
+## 도메인 명세
+
+* [도메인 명세 문서](https://min9288.notion.site/964d8cf0eff147e68874f75a7a2563d5)
+
+</br>
+
+## API 명세
+
+<details><summary>세부정보</summary>
+
+<br>
+
+
+  * <b>Sign & Member API</b> <br>
+
+    | Title | HTTP Method | URL | Request | Response | Auth
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 회원가입 | POST | /signs/register | { "email" : "이메일주소", "password" : "패스워드", "nickname" : "닉네임" } | SingleResult\<MemberRegisterResponseDTO\> | NO
+    | 이메일 인증 | GET | /signs/confirm-email | {} | SingleResult\<String\> | NO
+    | 로그인 | POST | /signs/login | {"email" : "이메일주소", "password" : "패스워드"} | SingleResult\<MemberLoginResponseDTO\> | NO
+    | 토큰 재발행 | POST | /signs/reissue | {"accessToken" : "엑세스 토큰", "refreshToken" : "리프레시 토큰"} | SingleResult\<TokenResponseDTO\> | NO
+    | 내 정보 보기 | GET | /members | {} | SingleResult\<MemberGetInfoResponseDTO\> | YES
+    | 내 정보 수정 | PUT | /members | {"nickname" : "수정할 닉네임", "money" : 보유 현금 기입} | SingleResult\<MemberUpdateResponseDTO\> | YES
+  
+<br>
+
+
+  * <b>Board API</b> <br>
+
+    | Title | HTTP Method | URL | Request | Response | Auth
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 게시글 작성 | POST | /boards | { "title" : "제목", "contents" : "내용", "boardStatus" : "PRIVATE_BOARD / PUBLIC_BOARD" } | SingleResult\<BoardWriteResponseDTO\> | YES
+    | 게시글 전체 조회 | GET | /boards | {} | MultipleResult\<BoardGetBoardListResponseDTO\> | YES
+    | 내가 작성한 게시글 전체 조회 | GET | /my-board-list/email/{email} | {} | MultipleResult\<BoardGetBoardListResponseDTO\> | YES
+    | 게시글 상세 조회 | GET | /boards/board-detail/boardUUID/{boardUUID} | {} | SingleResult\<BoardGetBoardResponseDTO\> | YES
+    | 게시글 수정 | PUT | /boards/{boardUUID} |{ "title" : "수정할 제목", "contents" : "내용", "boardStatus" : "PUBLIC_BOARD / PRIVATE_BOARD" } | SingleResult\<BoardUpdateResponseDTO\> | YES
+    | 게시글 삭제 | DELETE | /boards/{boardUUID} | {} | SingleResult\<BoardDeleteResponseDTO\> | YES
+  
+<br>
+
+
+  * <b>Product API</b> <br>
+
+    | Title | HTTP Method | URL | Request | Response | Auth
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 상품 등록 | POST | /products | { "category" : "FOOD / HOUSE_WARE / GIFT_CARD", "name" : "price" : 상품가격, "quantity" : 상품수량, "pointRate" : 상품별 포인트 적립률, "vander" : "GS25 / Homeplus / CGV" } | SingleResult\<ProductAddResponseDTO\> | YES
+    | 상품 수정 | PUT | /products/{productUUID} | { "category" : "FOOD / HOUSE_WARE / GIFT_CARD", "name" : "price" : 상품가격, "quantity" : 상품수량, "pointRate" : 상품별 포인트 적립률, "vander" : "GS25 / Homeplus / CGV" } | SingleResult\<ProductUpdateResponseDTO\> | YES
+    | 상품 전체 조회 | GET | /products | {} | MultipleResult\<ProductGetProductListResponseDTO\> | YES
+    | 상품 카테고리별 조회 | GET | /products/category/{category} | {} | MultipleResult\<ProductGetProductListResponseDTO\> | YES
+    | 상품 벤더사별 조회 | GET | /products/vander/{vander} | {} | MultipleResult<ProductGetProductListResponseDTO> | YES
+    | 상품명별 조회 | GET | /products/product-name/{productName} | {} | MultipleResult<ProductGetProductListResponseDTO> | YES
+    | 상품 UUID로 조회 | GET | /products/product-uuid/{productUUID} | {} | SingleResult\<ProductGetProductListResponseDTO\> | YES
+    | 상품 삭제 | DELETE | /products/{productUUID} | {} | String | YES
+  
+<br>
+
+  * <b>Cart API</b> <br>
+
+    | Title | HTTP Method | URL | Request | Response | Auth
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 장바구니에 상품 추가 | POST | /carts | { "productUUID" : "상품UUID", "orderCount" : 장바구니 상품 수량  } | MultipleResult\<CartGetCartItemResponseDTO\> | YES
+    | 장바구니 상품 수량 수정 | PUT | /carts/cart-item-uuid/{cartItemUUID | { "orderCount" : 수정할 상품 수량 수} | SingleResult\<CartGetCartItemResponseDTO\> | YES
+    | 장바구니 조회 | GET | /carts | {} | MultipleResult\<CartGetCartItemResponseDTO\>  | YES
+    | 장바구니 상품 선택 삭제 | DELETE | /carts/delete-cart-item/cart-item-uuid/{cartItemUUID} | {} | String | YES
+    | 장바구니 상품 전체 삭제 | DELETE | /carts/delete-all-cart-item | {} | String | YES
+
+  * <b>Order API</b> <br>
+
+    | Title | HTTP Method | URL | Request | Response | Auth
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 일반 주문 | POST | /orders/push-order | { "productUUID" : "상품UUID", "orderMethod" : "CASH / POINT", "orderCount" : 구매수량 } | SingleResult\<OrderResponseDTO\> | YES
+    | 장바구니 주문 | POST | /push-order-by-cart/order-method/{orderMethod} | {} | MultipleResult\<OrderResponseDTO\> | YES
+    | 전체 주문 내역 | GET | /orders | {} | MultipleResult\<OrderResponseDTO\>  | YES
+
+</details>
+
+<br>
+<br>
 
 ## 가용 서버
 - 43.200.144.129
@@ -308,8 +388,8 @@ Put
 * 닉네임과 보유 자금을 수정 할 수 있습니다.
 
 {
-    "nickname" : "수정 닉네임",
-    "money" : 30000000
+    "nickname" : "수정할 닉네임",
+    "money" : 보유 현금 기입
 }
 
 ```
@@ -665,8 +745,7 @@ Put
 * cartItemUUID : cartUUID 가 아닌 장바구니상품 UUID 입니다.
 
 {
-    "productUUID" : "상품UUID",
-    "orderCount" : 2
+    "orderCount" : 수정할 상품 수량 수
 }
 
 ```
