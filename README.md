@@ -425,9 +425,9 @@ Put
 
 <br/>
 
-<details><summary>세부정보</summary>
-
 ### 게시글 삭제
+
+<details><summary>세부정보</summary>
   
 ```bash
 DELETE 
@@ -439,6 +439,222 @@ DELETE
 
 > * 내가 작성한 글을 삭제할 수 있습니다.
 > * 타인이 내 게시글을 삭제할려고 할 시, 경고가 출력됩니다.
+
+</details>
+
+<br/>
+
+### 상품 등록
+
+<details><summary>세부정보</summary>
+  
+```bash
+POST 
+* 상품 등록 : 43.200.144.129/products
+
+{
+    "category" : "FOOD / HOUSE_WARE / GIFT_CARD",
+    "name" : "상품명",
+    "price" : 상품가격 / int,
+    "quantity" : 상품수량 / int,
+    "pointRate" : 상품별 포인트 적립률 / double,
+    "vander" : "GS25 / Homeplus / CGV"
+}
+
+```
+<p align="center">
+<img src = "./img/addProduct.png" width=100%>
+</p>
+
+> * 구매할 수 있는 상품들을 등록합니다.
+> * category 와 vander 는 enum값으로 아래와 같이 고정되어 있습니다.
+> * category (FOOD / HOUSE_WARE / GIFT_CARD)
+> * vander (GS25 / Homeplus / CGV)
+
+</details>
+
+<br/>
+
+### 상품 수정
+
+<details><summary>세부정보</summary>
+  
+```bash
+Put 
+* 상품 수정 : 43.200.144.129/products/{상품UUID}
+
+{
+    "category" : "FOOD / HOUSE_WARE / GIFT_CARD",
+    "name" : "상품명",
+    "price" : 상품가격 / int,
+    "quantity" : 상품수량 / int,
+    "pointRate" : 상품별 포인트 적립률 / double,
+    "vander" : "GS25 / Homeplus / CGV"
+}
+
+```
+<p align="center">
+<img src = "./img/updateProduct.png" width=100%>
+</p>
+
+
+</details>
+
+<br/>
+
+### 상품 전체조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 전체조회 : 43.200.144.129/products
+```
+<p align="center">
+<img src = "./img/getAllProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 카테고리별 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 카테고리별 조회 : 43.200.144.129/products/category/{FOOD / HOUSE_WARE / GIFT_CARD}
+```
+<p align="center">
+<img src = "./img/getCategoryProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 벤더사별 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 벤더사별 조회 : 43.200.144.129/products/vander/{GS25 / Homeplus / CGV}
+```
+<p align="center">
+<img src = "./img/getVenderProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 이름별 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 이름별 조회 : 43.200.144.129/products/product-name/{상품이름}
+```
+<p align="center">
+<img src = "./img/getNameProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 UUID 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 UUID 조회 : 43.200.144.129/products/product-uuid/{상품UUID}
+```
+<p align="center">
+<img src = "./img/getAllProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 삭제
+
+<details><summary>세부정보</summary>
+  
+```bash
+Delete 
+* 상품 삭제 : 43.200.144.129/products/{상품UUID}
+```
+<p align="center">
+<img src = "./img/deleteProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 장바구니 상품 추가
+
+<details><summary>세부정보</summary>
+  
+```bash
+Post 
+* 상품 전체조회 : 43.200.144.129/carts
+
+{
+    "productUUID" : "상품UUID",
+    "orderCount" : 장바구니 상품 수량
+}
+
+```
+<p align="center">
+<img src = "./img/addCart.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 장바구니 상품 수량 수정
+
+<details><summary>세부정보</summary>
+  
+```bash
+Put 
+* 상품 전체조회 : 43.200.144.129/carts/cart-item-uuid/{cartItemUUID}
+* cartItemUUID : cartUUID 가 아닌 장바구니 상품 UUID 입니다.
+
+
+{
+    "productUUID" : "",
+    "orderCount" : 2
+}
+
+```
+<p align="center">
+<img src = "./img/getAllProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 상품 전체조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 전체조회 : 43.200.144.129/products
+```
+<p align="center">
+<img src = "./img/getAllProduct.png" width=100%>
+</p>
 
 </details>
 

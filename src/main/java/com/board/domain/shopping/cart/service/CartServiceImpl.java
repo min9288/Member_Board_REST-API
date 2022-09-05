@@ -130,12 +130,17 @@ public class CartServiceImpl implements CartService{
         cart.setTotalPrice(totalPrice);
         cartRepository.save(cart);
 
+        double pointRateTemp = cartItem.getProduct().getPointRate() * 10;
+        int pointRate = (int) pointRateTemp;
+        String pointTypeConverter = String.valueOf(pointRate) + "%";
+
         return CartGetCartItemResponseDTO.builder()
                 .cartUUID(cartItem.getCart().getCartUUID())
                 .cartItemUUID(cartItem.getCartItemUUID())
                 .productName(cartItem.getProduct().getName())
                 .price(cartItem.getProduct().getPrice())
                 .orderCount(cartItem.getOrderCount())
+                .pointRateStr(pointTypeConverter)
                 .enrollDate(cartItem.getEnrollDate())
                 .updateDate(cartItem.getUpdateDate())
                 .build();
