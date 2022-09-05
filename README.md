@@ -82,11 +82,10 @@
 
 </details>
 
+
 </br>
 
 ## 프로젝트 히스토리
-
-<details><summary>세부정보</summary>
 
 - 히스토리
   - 2022/07/25 ~ 31 : 회원-게시판 기능 구현
@@ -100,24 +99,21 @@
         - After ex) board = board.update(requestDTO.toEntity())
     - 쇼핑 (상품 / 장바구니 / 주문) 기능 추가 구현
 
-</details>
-
-
 </br>
 
 ## 기술 스택
-- Spring Boot (API Server)
-- Spring Security (Security)
-- JPA & QueryDSL (ORM)
-- MySQL (8.0 / Google Cloud SQL) (RDB)
-- AWS EC2 (Infra)
-- AWS S3 (Build Store)
-- ~Travis CI & AWS Codedeploy (CI/CD)~ - travis 무료 크레딧 만료로 git action으로 변경
-- Git Action & AWS Codedeploy (CI/CD) 
-- Nginx (Reverse Proxy Server)
-- Postman (Documentation)
-- DBeaver (Database tool)
-- IntelliJ (Development tool)
+- `Spring Boot (API Server)`
+- `Spring Security (Security)`
+- `JPA & QueryDSL (ORM)`
+- `MySQL (8.0 / Google Cloud SQL) (RDB)`
+- `AWS EC2 (Infra)`
+- `AWS S3 (Build Store)`
+- `~Travis CI & AWS Codedeploy (CI/CD)~ - travis 무료 크레딧 만료로 git action으로 변경`
+- `Git Action & AWS Codedeploy (CI/CD)`
+- `Nginx (Reverse Proxy Server)`
+- `Postman (Documentation)`
+- `DBeaver (Database tool)`
+- `IntelliJ (Development tool)`
 
 </br>
 
@@ -127,9 +123,9 @@
 
 </br>
 
-## 기능 및 사용방법
+## 서비스 기능 안내
 > JWT를 적용하여 일부 API를 제외하고는 토큰을 통해 접근 할 수 있습니다.
-
+>
 > 토큰 없이 접근가능한 API는 다음과 같습니다.
 > - "/sings/**" - 가입 / 로그인 / 토큰 재발행 / 이메일 인증
 > - "/exception/**" - 예외처리
@@ -137,29 +133,39 @@
 > - "/actuator/**" - 애플리케이션 상태 확인
 > - "/test" - 테스트
 
+
 <br/>
 
-### 테스트 계정
+### 테스트 계정 및 토큰 인증 안내
 ```bash 
-* email 
-  - wjdalsdnchlr@naver.com
-
+* email : wjdalsdnchlr@naver.com
 * password : qwer1234
+
+---
+
+* HTTP 헤더
+key : X-AUTH-TOKEN
+value : 엑세스 토큰값 (로그인시 Response 값으로 확인할 수 있습니다.)
+
 ```
 
 <br/>
 
 ### 회원가입
+
+<details><summary>세부정보</summary>
   
 ```bash 
 Post
-* 회원가입 : 3.39.20.133/sign/register
+* 회원가입 : 43.200.144.129/signs/register
 {
     "email" : "이메일주소",
     "password" : "패스워드",
     "nickname" : "닉네임"
 }
+
 ```
+
 <p align="center">
 <img src = "./img/join.png" width=100%>
 </p>
@@ -168,14 +174,19 @@ Post
 > * 회원가입 후 이메일 인증을 진행해야 정상적으로 로그인이 됩니다.
 > * 이메일 미 인증 후 로그인 시 이메일 인증을 해야된다는 오류 메시지가 전달됩니다.
 
+</details>
+
 <br/>
 
+
 ### 이메일 인증
+
+<details><summary>세부정보</summary>
   
 ```bash 
 Get
-* 이메일 인증 : 3.39.20.133/sign/confirm-email?email=이메일주소&authToken=엑세스토큰
-* 엑세스 토큰 유효시간 : 5분
+* 이메일 인증 : 43.200.144.129/sign/confirm-email?email=이메일주소&authToken=엑세스토큰
+* 인증 유효시간 : 5분
 * 회원가입 시 Response 값으로 나왔던 엑세스 토큰과 이메일주소로 진행하면 됩니다.
 * 인증방식 : 
   - Postman을 통한 인증방식
@@ -193,13 +204,17 @@ Get
 > * 회원가입 후 이메일 인증을 진행해야 정상적으로 로그인이 됩니다.
 > * 이메일 미 인증 후 로그인 시 이메일 인증을 해야된다는 오류 메시지가 전달됩니다.
 
+</details>
+
 <br/>
 
 ### 로그인
+
+<details><summary>세부정보</summary>
   
 ```bash 
 Post
-* 로그인 : 3.39.20.133/sign/login
+* 로그인 : 43.200.144.129/signs/login
 * 엑세스 토큰 유효시간 : 30분
 * 재발행 토큰 유효기간 : 7일
 
@@ -216,13 +231,17 @@ Post
 > * Response 값에 있는 토큰으로 토큰 없이 접근 가능한 API외에 다른 API들을 이용할 때 사용하시면 됩니다.
 > * Response 값에 재발행 토큰 값이 있는데, 이것으로 토큰 만료 후 토큰을 재발행 할 수 있습니다.
 
+</details>
+
 <br/>
 
 ### 토큰 재발행
+
+<details><summary>세부정보</summary>
   
 ```bash 
 Post
-* 토큰 재발행 : 3.39.20.133/sign/reissue
+* 토큰 재발행 : 43.200.144.129/signs/reissue
 {
     "accessToken" : "엑세스 토큰",
     "refreshToken" : "리프레시 토큰"
@@ -235,9 +254,13 @@ Post
 
 > * 토큰 재발행 시, 로그인할때 나온 Response 값(accessToken, refreshToken)으로 사용하시면 됩니다.
 
+</details>
+
 <br/>
 
 ### 토큰 사용 방법
+
+<details><summary>세부정보</summary>
   
 ```bash 
 * 각 API의 Headers 에서 Key값과 Value값을 넣어주세요
@@ -248,28 +271,57 @@ Post
 <img src = "./img/tokenAuth.png" width=100%>
 </p>
 
+</details>
+
 <br/>
 
 ### 내 정보 보기
+
+<details><summary>세부정보</summary>
   
 ```bash 
 Get
-* 내 정보 보기 : 3.39.20.133/member/myInfo/{회원UUID}
-* 로그인 할때 Response 값으로 나온 memberUUID를 가지고 조회 할 수 있습니다.
+* 내 정보 보기 : 43.200.144.129/members
 ```
 <p align="center">
 <img src = "./img/myInfo.png" width=100%>
 </p>
 
-> * 지금 로그인한 회원이, 조회할려는 회원과 동일인이 아닐 경우 본인이 아니라는 경고 값이 출력됩니다.
+</details>
+
+<br/>
+
+### 내 정보 수정
+
+<details><summary>세부정보</summary>
+  
+```bash 
+Get
+* 내 정보 수정 : 43.200.144.129/members
+* 닉네임과 보유 자금을 수정 할 수 있습니다.
+
+{
+    "nickname" : "수정 닉네임",
+    "money" : 30000000
+}
+
+```
+<p align="center">
+<img src = "./img/myInfoUpdate.png" width=100%>
+</p>
+
+</details>
+
 
 <br/>
 
 ### 게시글 작성
+
+<details><summary>세부정보</summary>
   
 ```bash
 Post 
-* 게시글 작성 : 3.39.20.133/board/write
+* 게시글 작성 : 43.200.144.129/boards
 * boardStatus : PRIVATE_BOARD - 게시글 잠금 / PUBLIC_BOARD - 공개 게시글
 {
     "title" : "제목",
@@ -283,13 +335,17 @@ Post
 
 > * boardStatus를 통해 게시글을 잠금할지 공개할지 선택할 수 있습니다.
 
+</details>
+
 <br/>
 
 ### 게시글 전체 조회
+
+<details><summary>세부정보</summary>
   
 ```bash
 Get 
-* 게시글 전체 조회 : 3.39.20.133/board/getAll
+* 게시글 전체 조회 : 43.200.144.129/boards
 ```
 <p align="center">
 <img src = "./img/getAll.png" width=100%>
@@ -297,13 +353,17 @@ Get
 
 > * boardStatus가 PUBLIC_BOARD인 전체 게시글을 조회 할 수 있습니다.
 
+</details>
+
 <br/>
 
 ### 내가 작성한 게시글 전체 조회
   
+<details><summary>세부정보</summary>
+
 ```bash
 Get 
-* 내가 작성한 게시글 전체 조회 : 3.39.20.133/board/{이메일주소}
+* 내가 작성한 게시글 전체 조회 : 43.200.144.129/boards/my-board-list/email/{이메일주소}
 ```
 <p align="center">
 <img src = "./img/myBoardInfo.png" width=100%>
@@ -313,13 +373,17 @@ Get
 > * 내가 작성한 PUBLIC_BOARD, PRIVATE_BOARD 모두 조회를 할 수 있습니다.
 > * 다만, 작성한 유저가 아닌 다른 유저가 내 게시물을 조회하려고 할 시 경고를 출력합니다.
 
+</details>
+
 <br/>
 
 ### 게시글 상세 조회
+
+<details><summary>세부정보</summary>
   
 ```bash
 Get 
-* 게시글 상세조회 : 3.39.20.133/board/detail/{게시글UUID}
+* 게시글 상세조회 : 43.200.144.129/boards/board-detail/boardUUID/{게시글UUID}
 ```
 <p align="center">
 <img src = "./img/boardDetail.png" width=100%>
@@ -331,13 +395,17 @@ Get
 > * PRIVATE_BOARD 게시물의 경우 본인이 아니면 조회 할 수 없습니다.
 > * 작성한 유저가 아닌 다른 유저가 PRIVATE_BOARD 게시물을 조회하려고 할 시 경고를 출력합니다.
 
+</details>
+
 <br/>
 
 ### 게시글 수정
+
+<details><summary>세부정보</summary>
   
 ```bash
 Put 
-* 게시글 수정 : 3.39.20.133/board/update/{게시글UUID}
+* 게시글 수정 : 43.200.144.129/boards/{게시글UUID}
 
 {
     "title" : "수정할 제목",
@@ -353,13 +421,17 @@ Put
 > * boardStatus 도 수정이 가능하며, 여기서 게시글을 잠금해제하거나 잠금할 수 있습니다.
 > * 타인이 내 게시글을 수정할려고 할 시, 경고가 출력됩니다.
 
+</details>
+
 <br/>
+
+<details><summary>세부정보</summary>
 
 ### 게시글 삭제
   
 ```bash
 DELETE 
-* 게시글 삭제 : 3.39.20.133/board/delete/{게시글UUID}
+* 게시글 삭제 : 43.200.144.129/boards/delete/{게시글UUID}
 ```
 <p align="center">
 <img src = "./img/deleteBoard.png" width=100%>
@@ -367,6 +439,8 @@ DELETE
 
 > * 내가 작성한 글을 삭제할 수 있습니다.
 > * 타인이 내 게시글을 삭제할려고 할 시, 경고가 출력됩니다.
+
+</details>
 
 <br/>
 

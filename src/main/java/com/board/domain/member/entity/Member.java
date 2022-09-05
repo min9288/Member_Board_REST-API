@@ -69,7 +69,7 @@ public class Member {
     private  Boolean emailAuth;
 
     // 조인컬럼 (Baord)
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 
