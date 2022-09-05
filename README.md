@@ -73,6 +73,9 @@
     - 전체 삭제
      - 장바구니에 있는 전체 상품들을 삭제합니다.
   - 주문
+    - 주문방식은 CASH / POINT가 존재합니다.
+      - CASH로 주문 시, 주문금액에 따라 회원 보유 자금이 차감 및 상품 포인트적립률에 따른 포인트 적립이 이루어집니다.
+      - POINT로 주문 시, 주문금액에 따라 회원 보유 포인트가 차감되고 포인트 적립은 되지 않습니다. 
     - 일반 주문
       - 상품ID와 주문방식(CASH / PONT), 주문수량을 기입하여 주문합니다.
     - 장바구니 주문
@@ -148,6 +151,10 @@ key : X-AUTH-TOKEN
 value : 엑세스 토큰값 (로그인시 Response 값으로 확인할 수 있습니다.)
 
 ```
+
+<br/>
+
+## 회원 서비스
 
 <br/>
 
@@ -296,7 +303,7 @@ Get
 <details><summary>세부정보</summary>
   
 ```bash 
-Get
+Put
 * 내 정보 수정 : 43.200.144.129/members
 * 닉네임과 보유 자금을 수정 할 수 있습니다.
 
@@ -312,6 +319,10 @@ Get
 
 </details>
 
+
+<br/>
+
+## 게시판 서비스
 
 <br/>
 
@@ -444,6 +455,10 @@ DELETE
 
 <br/>
 
+## 상품 서비스
+
+<br/>
+
 ### 상품 등록
 
 <details><summary>세부정보</summary>
@@ -534,6 +549,22 @@ Get
 
 <br/>
 
+### 상품 카테고리별 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 상품 카테고리별 조회 : 43.200.144.129/products/category/{FOOD / HOUSE_WARE / GIFT_CARD}
+```
+<p align="center">
+<img src = "./img/getCategoryProduct.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
 ### 상품 벤더사별 조회
 
 <details><summary>세부정보</summary>
@@ -598,13 +629,17 @@ Delete
 
 <br/>
 
+## 장바구니 서비스
+
+<br/>
+
 ### 장바구니 상품 추가
 
 <details><summary>세부정보</summary>
   
 ```bash
 Post 
-* 상품 전체조회 : 43.200.144.129/carts
+* 장바구니 상품 추가 : 43.200.144.129/carts
 
 {
     "productUUID" : "상품UUID",
@@ -626,39 +661,148 @@ Post
   
 ```bash
 Put 
-* 상품 전체조회 : 43.200.144.129/carts/cart-item-uuid/{cartItemUUID}
-* cartItemUUID : cartUUID 가 아닌 장바구니 상품 UUID 입니다.
-
+* 장바구니 상품 수량 수정 : 43.200.144.129/carts/cart-item-uuid/{cartItemUUID}
+* cartItemUUID : cartUUID 가 아닌 장바구니상품 UUID 입니다.
 
 {
-    "productUUID" : "",
+    "productUUID" : "상품UUID",
     "orderCount" : 2
 }
 
 ```
 <p align="center">
-<img src = "./img/getAllProduct.png" width=100%>
+<img src = "./img/updateCartItem.png" width=100%>
 </p>
 
 </details>
 
 <br/>
 
-### 상품 전체조회
+### 장바구니 조회
 
 <details><summary>세부정보</summary>
   
 ```bash
 Get 
-* 상품 전체조회 : 43.200.144.129/products
+* 장바구니 조회 : 43.200.144.129/carts
 ```
 <p align="center">
-<img src = "./img/getAllProduct.png" width=100%>
+<img src = "./img/getCart.png" width=100%>
 </p>
 
 </details>
 
 <br/>
+
+### 장바구니 상품 선택 삭제
+
+<details><summary>세부정보</summary>
+  
+```bash
+Delete 
+* 장바구니 상품 선택 삭제 : 43.200.144.129/carts/delete-cart-item/cart-item-uuid/{장바구니상품 UUID}
+```
+<p align="center">
+<img src = "./img/deleteSeleteCartItem.png" width=100%>
+</p>
+
+</details>
+
+<br/>
+
+### 장바구니 상품 전체 삭제
+
+<details><summary>세부정보</summary>
+  
+```bash
+Delete 
+* 장바구니 상품 전체 삭제 : 43.200.144.129/carts/delete-all-cart-item
+```
+<p align="center">
+<img src = "./img/deleteAllCartItem.png" width=100%>
+<img src = "./img/deleteAllCartItemAfterCart.png" width=100%>
+</p>
+
+> 두번째 사진에서, 장바구니 전체 삭제 후 비어있는 장바구니를 확인할 수 있습니다. 
+
+</details>
+
+<br/>
+
+## 주문 서비스
+
+<br/>
+
+### 일반 주문
+
+<details><summary>세부정보</summary>
+  
+```bash
+Post 
+* 일반 주문 : 43.200.144.129/orders/push-order
+
+{
+    "productUUID" : "상품UUID",
+    "orderMethod" : "CASH / POINT",
+    "orderCount" : 구매수량
+}
+
+```
+<p align="center">
+<img src = "./img/pushOrder.png" width=100%>
+<img src = "./img/pushOrderMemberInfo.png" width=100%>
+</p>
+
+> * 두번째 사진에서, 주문 후 회원 보유자금 차감 및 포인트 적립된 상태를 확인할 수 있습니다.
+> * orderMethod가 CASH라면, 포인트가 적립됩니다.
+> * orderMethod가 POINT라면, 포인트가 적립되지않고 주문금액에 따라 보유 포인트가 차감됩니다.
+
+</details>
+
+<br/>
+
+### 장바구니 상품 주문
+
+<details><summary>세부정보</summary>
+  
+```bash
+Post 
+* 장바구니 주문 : 43.200.144.129/orders/push-order-by-cart/order-method/{CASH / POINT}
+
+* 장바구니에 등록한 상품들 전체가 결제됩니다.
+
+```
+<p align="center">
+<img src = "./img/pushOrderByCart.png" width=100%>
+</p>
+
+> * 장바구니에 등록된 상품들 전체가 결제됩니다.
+> * Response 값으로 보이는 "orderPrice"는 장바구니 주문상품 1건당 금액입니다.
+> * "orderTotalPrice" 이번 주문 총 결제금액 입니다.
+
+</details>
+
+<br/>
+
+### 전체 주문 내역 조회
+
+<details><summary>세부정보</summary>
+  
+```bash
+Get 
+* 전체 주문 내역 조회 : 43.200.144.129/orders
+
+```
+<p align="center">
+<img src = "./img/orderHistory.png" width=100%>
+</p>
+
+> * 주문내역 Response값에서 "orderUUID" 를 통해 같은 주문건인지 확인 할 수 있습니다.
+
+</details>
+
+<br/>
+
 
 ## Spring Boot (API Server)
 > 요청한 데이터를 JSON으로 response 합니다.
