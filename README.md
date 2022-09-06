@@ -272,7 +272,7 @@ Post
   
 ```bash 
 Get
-* 이메일 인증 : 43.200.144.129/sign/confirm-email?email=이메일주소&authToken=엑세스토큰
+* 이메일 인증 : 43.200.144.129/signs/confirm-email?email=이메일주소&authToken=엑세스토큰
 * 인증 유효시간 : 5분
 * 회원가입 시 Response 값으로 나왔던 엑세스 토큰과 이메일주소로 진행하면 됩니다.
 * 인증방식 : 
