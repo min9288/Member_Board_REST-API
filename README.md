@@ -137,7 +137,7 @@
   * <b>Sign & Member API</b> <br>
 
     | Title | HTTP Method | URL | Request | Response | Auth
-    |:---:|:---:|:---:|:---:|:---:|:---:|
+    |:-------:|:---:|:-------:|:-------:|:-------:|:---:|
     | 회원가입 | POST | /signs/register | { "email" : "이메일주소", "password" : "패스워드", "nickname" : "닉네임" } | SingleResult\<MemberRegisterResponseDTO\> | NO
     | 이메일 인증 | GET | /signs/confirm-email | {} | SingleResult\<String\> | NO
     | 로그인 | POST | /signs/login | {"email" : "이메일주소", "password" : "패스워드"} | SingleResult\<MemberLoginResponseDTO\> | NO
