@@ -903,9 +903,11 @@ Get
 <br/>
 
 ## JPA & QueryDSL (ORM)
-> JPA를 사용하여 객체 중심 domain 설계 및 반복적인 CRUD 작업을 간단히 DB 데이터를 조회함으로써 대체합니다.
-> JPA에서 구현하기 어려운 SQL문들을 QueryDSL으로 작성합니다.
-> 다만, 이번에 QueryDSL을 사용하기 위한 어려운 SQL문들은 없었으나 QueryDSL을 사용해보기 위해 적용하였습니다.
+> * JPA를 사용하여 객체 중심 domain 설계 및 반복적인 CRUD 작업을 간단히 DB 데이터를 조회함으로써 대체합니다.
+>
+> * JPA에서 구현하기 어려운 SQL문들을 QueryDSL으로 작성합니다.
+>
+> * 이번에 QueryDSL을 사용하기 위한 어려운 SQL문들은 없었으나 QueryDSL을 사용해보기 위해 적용하였습니다.
 
 - 구조는 다음과 같습니다. (ex. board)
   - Board (Domain Class)
@@ -925,12 +927,14 @@ Get
 
 <br/>
 
-## ~Travis CI & Codedeploy & EC2 (CI/CD, Infra)~ - 무료계정 만료로, 깃액션으로 변경
+## ~Travis CI & Codedeploy & Nginx (CI/CD)~ - 무료계정 만료로, 깃액션으로 변경
 
 <details><summary>세부정보</summary>
 
 > * Travis CI 과 AWS Codedeploy를 통한 배포 자동화와 Nginx를 통한 무중단 배포를 구축하였습니다.
+>
 > * EC2의 SSH 접근권한은 제 IP만 허용했습니다.
+>
 > * 보안성을 강화하기 위해, 루트 계정이 아닌 IAM 계정에서 사용자를 생성하고  S3 및 Codedeploy 접근권한 부여하여 사용하였습니다.
 
 
@@ -943,9 +947,11 @@ Get
 
 <br/>
 
-## GitHub Actions & Codedeploy & EC2 (CI/CD, Infra)
+## GitHub Actions & Codedeploy & Nginx (CI/CD)
 > * GitHub Actions 과 AWS Codedeploy를 통한 배포 자동화와 Nginx를 통한 무중단 배포를 구축하였습니다.
+>
 > * EC2의 SSH 접근권한은 제 IP만 허용했습니다.
+>
 > * 보안성을 강화하기 위해, 루트 계정이 아닌 IAM 계정에서 사용자를 생성하고  S3 및 Codedeploy 접근권한 부여하여 사용하였습니다.
 
 
