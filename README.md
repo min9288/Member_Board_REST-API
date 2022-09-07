@@ -629,21 +629,6 @@ Get
 
 <br/>
 
-### 상품 카테고리별 조회
-
-<details><summary>세부정보</summary>
-  
-```bash
-Get 
-* 상품 카테고리별 조회 : 43.200.144.129/products/category/{FOOD / HOUSE_WARE / GIFT_CARD}
-```
-<p align="center">
-<img src = "./img/getCategoryProduct.png" width=100%>
-</p>
-
-</details>
-
-<br/>
 
 ### 상품 벤더사별 조회
 
