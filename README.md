@@ -671,7 +671,7 @@ Get
 * 상품 UUID 조회 : 43.200.144.129/products/product-uuid/{상품UUID}
 ```
 <p align="center">
-<img src = "./img/getAllProduct.png" width=100%>
+<img src = "./img/getProductUUID.png" width=100%>
 </p>
 
 </details>
