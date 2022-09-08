@@ -893,7 +893,7 @@ Get
   - Form Login : disable  -> REST API 이므로 Form Login 미사용
   - Session Creation Policy : STATELESS -> JWT로 인증하므로 세션 미사용
   - AuthorizeRequest : 
-    - “ /api/signs/** ” : 회원가입 / 로그인 / 이메일 인증 / 토큰 관련 API를 허용합니다.
+    - “ /signs/** ” : 회원가입 / 로그인 / 이메일 인증 / 토큰 관련 API를 허용합니다.
     - “ /exception/** ” - 예외처리 API를 허용합니다.
     - “ /test ” - 테스트 API를 허용합니다.
     - " /profile "  - profile API를 허용합니다.
