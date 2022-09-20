@@ -201,8 +201,8 @@
 <br>
 
 ## 가용 서버
-- 43.200.144.129
-  - 실 사용은 위 서버로 진행할 수 있습니다.
+- ~43.200.144.129~
+  - 무료 사용 만료로 인한 서버종료
 
 </br>
 
@@ -629,21 +629,6 @@ Get
 
 <br/>
 
-### 상품 카테고리별 조회
-
-<details><summary>세부정보</summary>
-  
-```bash
-Get 
-* 상품 카테고리별 조회 : 43.200.144.129/products/category/{FOOD / HOUSE_WARE / GIFT_CARD}
-```
-<p align="center">
-<img src = "./img/getCategoryProduct.png" width=100%>
-</p>
-
-</details>
-
-<br/>
 
 ### 상품 벤더사별 조회
 
@@ -686,7 +671,7 @@ Get
 * 상품 UUID 조회 : 43.200.144.129/products/product-uuid/{상품UUID}
 ```
 <p align="center">
-<img src = "./img/getAllProduct.png" width=100%>
+<img src = "./img/getProductUUID.png" width=100%>
 </p>
 
 </details>
@@ -908,7 +893,7 @@ Get
   - Form Login : disable  -> REST API 이므로 Form Login 미사용
   - Session Creation Policy : STATELESS -> JWT로 인증하므로 세션 미사용
   - AuthorizeRequest : 
-    - “ /api/sign/** ” : 회원가입 / 로그인 / 이메일 인증 / 토큰 관련 API를 허용합니다.
+    - “ /signs/** ” : 회원가입 / 로그인 / 이메일 인증 / 토큰 관련 API를 허용합니다.
     - “ /exception/** ” - 예외처리 API를 허용합니다.
     - “ /test ” - 테스트 API를 허용합니다.
     - " /profile "  - profile API를 허용합니다.
@@ -918,9 +903,11 @@ Get
 <br/>
 
 ## JPA & QueryDSL (ORM)
-> JPA를 사용하여 객체 중심 domain 설계 및 반복적인 CRUD 작업을 간단히 DB 데이터를 조회함으로써 대체합니다.
-> JPA에서 구현하기 어려운 SQL문들을 QueryDSL으로 작성합니다.
-> 다만, 이번에 QueryDSL을 사용하기 위한 어려운 SQL문들은 없었으나 QueryDSL을 사용해보기 위해 적용하였습니다.
+> * JPA를 사용하여 객체 중심 domain 설계 및 반복적인 CRUD 작업을 간단히 DB 데이터를 조회함으로써 대체합니다.
+>
+> * JPA에서 구현하기 어려운 SQL문들을 QueryDSL으로 작성합니다.
+>
+> * 이번에 QueryDSL을 사용하기 위한 어려운 SQL문들은 없었으나 QueryDSL을 사용해보기 위해 적용하였습니다.
 
 - 구조는 다음과 같습니다. (ex. board)
   - Board (Domain Class)
@@ -940,12 +927,14 @@ Get
 
 <br/>
 
-## ~Travis CI & Codedeploy & EC2 (CI/CD, Infra)~ - 무료계정 만료로, 깃액션으로 변경
+## ~Travis CI & Codedeploy & Nginx (CI/CD)~ - 무료계정 만료로, 깃액션으로 변경
 
 <details><summary>세부정보</summary>
 
 > * Travis CI 과 AWS Codedeploy를 통한 배포 자동화와 Nginx를 통한 무중단 배포를 구축하였습니다.
+>
 > * EC2의 SSH 접근권한은 제 IP만 허용했습니다.
+>
 > * 보안성을 강화하기 위해, 루트 계정이 아닌 IAM 계정에서 사용자를 생성하고  S3 및 Codedeploy 접근권한 부여하여 사용하였습니다.
 
 
@@ -958,9 +947,11 @@ Get
 
 <br/>
 
-## GitHub Actions & Codedeploy & EC2 (CI/CD, Infra)
+## GitHub Actions & Codedeploy & Nginx (CI/CD)
 > * GitHub Actions 과 AWS Codedeploy를 통한 배포 자동화와 Nginx를 통한 무중단 배포를 구축하였습니다.
+>
 > * EC2의 SSH 접근권한은 제 IP만 허용했습니다.
+>
 > * 보안성을 강화하기 위해, 루트 계정이 아닌 IAM 계정에서 사용자를 생성하고  S3 및 Codedeploy 접근권한 부여하여 사용하였습니다.
 
 
@@ -978,117 +969,3 @@ Get
 
 
 <br/>
-
-## 패키지 구조
-
-```bash
-
-domain
-  ㄴ board
-      ㄴ dto
-          ㄴ requestDTO
-              ㄴ BoardUpdateRequestDTO.class
-              ㄴ BoardWriteRequestDTO.class
-          ㄴ responseDTO
-              ㄴ BoardDeleteResponseDTO.class
-              ㄴ BoardGetBoardListResponseDTO.class
-              ㄴ BoardGetBoardResponseDTO.class
-              ㄴ BoardUpdateResponseDTO.class
-              ㄴ BoardWriteResponseDTO.class
-      ㄴ entity
-          ㄴ Board.class
-          ㄴ enumPackage
-              ㄴ BoardStatus.enum
-      ㄴ repository
-          ㄴ BoardCustomRepository.interface
-          ㄴ BoardCustomRepositoryImpl.class
-          ㄴ BoardRepository.interface
-      ㄴ service 
-          ㄴ BoardService.interface
-          ㄴ BoardServiceImpl.class
-  ㄴ email
-      ㄴ dto
-          ㄴ requestDTO
-              ㄴ EmailAuthRequestDTO.class
-      ㄴ entity
-          ㄴ EmailAuth.class
-      ㄴ repository
-          ㄴ EmailAuthCustomRepository.interface
-          ㄴ EmailAuthCustomRepositoryImpl.class
-          ㄴ EmailAuthRepository.interface
-      ㄴ service 
-          ㄴ EmailService.class
-  ㄴ member
-      ㄴ dto
-          ㄴ requestDTO
-              ㄴ MemberLoginRequestDTO.class
-              ㄴ MemberRegisterRequestDTO.class
-              ㄴ TokenRequestDto.class
-          ㄴ responseDTO
-              ㄴ MemberGetInfoResponseDTO.class
-              ㄴ MemberLoginResponseDTO.class
-              ㄴ MemberRegisterResponseDTO.class
-              ㄴ TokenResponseDTO.class
-      ㄴ entity
-          ㄴ Member.class
-          ㄴ enumPackage
-              ㄴ Role.enum
-      ㄴ repository
-          ㄴ MemberRepository.interface
-      ㄴ service 
-          ㄴ MemberService.interface
-          ㄴ MemberServiceImpl.class
-          ㄴ SingService.class
-  ㄴ response
-      ㄴ service 
-          ㄴ ResponseService.class
-  ㄴ response
-      ㄴ service 
-          ㄴ ResponseService.class
-  ㄴ result
-      ㄴ MultipleResult.class
-      ㄴ Result.class
-      ㄴ SingleResult.class
-exception
-  ㄴ AuthenticationEntryPointException.class
-  ㄴ BoardDeleteFailureException.class
-  ㄴ BoardNotFoundException.class
-  ㄴ EmailAuthTokenNotFountException.class
-  ㄴ EmailNotAuthenticatedException.class
-  ㄴ InvalidRefreshTokenException.class
-  ㄴ LoginFailureException.class
-  ㄴ MemberDoNotUseOtherThingException.class
-  ㄴ MemberEmailAlreadyExistsException.class
-  ㄴ MemberNicknameAlreadyExistsException.class
-  ㄴ MemberNotFoundException.class
-  ㄴ MemberNotWriterException.class
-  ㄴ ProcessFailureException.class
-  ㄴ advise
-      ㄴ ExceptionAdvice.class
-security
-  ㄴ accessDeniedHandler
-      ㄴ CustomAccessDeniedHandler.class
-  ㄴ authenticationEntryPoint
-      ㄴ CustomAuthenticationEntryPoint.class
-  ㄴ jwt
-      ㄴ JwtAuthenticationFilter.class
-      ㄴ JwtTokenProvider.class
-  ㄴ member
-      ㄴ MemberDatails.class
-      ㄴ MemberDetailsService.class
-  ㄴ util
-      ㄴ SecurityUtil.class
-  ㄴ SecurityConfig.class
-web
-  ㄴ controller
-      ㄴ board
-          ㄴ BoardController.class
-      ㄴ exception
-          ㄴ ExceptionController.class
-      ㄴ member
-          ㄴ MemberController.class
-          ㄴ SignController.class
-      ㄴ profile
-          ㄴ ProfileController.class
-          
-```
