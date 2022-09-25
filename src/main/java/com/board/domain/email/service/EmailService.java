@@ -22,6 +22,7 @@ public class EmailService {
 //        smm.setText("43.200.144.129/signs/confirm-email?email="+email+"&authToken="+authToken);
         smm.setText("http://localhost/signs/confirm-email?email="+email+"&authToken="+authToken);
 
+
         javaMailSender.send(smm);
     }
 }
