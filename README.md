@@ -1,4 +1,4 @@
-# Member_Board_REST-API
+# Member_Board_REST-API By git_flow
 > 회원과 게시판 / 쇼핑 기능이 있는 애플리케이션 서버입니다.
 > 
 > 기존의 회원-게시판 기능에서 쇼핑 기능을 추가하였습니다.
