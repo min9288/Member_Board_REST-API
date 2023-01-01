@@ -1,6 +1,6 @@
-# Member_Board_REST-API By git_flow
+# Member_Board_REST-API
 > 회원과 게시판 / 쇼핑 기능이 있는 애플리케이션 서버입니다.
-> 
+>
 > 기존의 회원-게시판 기능에서 쇼핑 기능을 추가하였습니다.
 >
 > 지속적으로 기존 코드에 대한 리펙토링을 진행 중 입니다.
@@ -76,7 +76,7 @@
   - 주문
     - 주문방식은 CASH / POINT가 존재합니다.
       - CASH로 주문 시, 주문금액에 따라 회원 보유 자금이 차감 및 상품 포인트적립률에 따른 포인트 적립이 이루어집니다.
-      - POINT로 주문 시, 주문금액에 따라 회원 보유 포인트가 차감되고 포인트 적립은 되지 않습니다. 
+      - POINT로 주문 시, 주문금액에 따라 회원 보유 포인트가 차감되고 포인트 적립은 되지 않습니다.
     - 일반 주문
       - 상품ID와 주문방식(CASH / PONT), 주문수량을 기입하여 주문합니다.
     - 장바구니 주문
@@ -93,7 +93,7 @@
 
 - 히스토리
   - 2022/07/25 ~ 31 : 회원-게시판 기능 구현
-  - ~ 현재 
+  - ~ 현재
     - 기존 코드 리펙토링
       - URL 리소스를 수정
         - Before ex)  localhost/board/myBoard/{email}
@@ -144,7 +144,7 @@
     | 토큰 재발행 | POST | /signs/reissue | {"accessToken" : "엑세스 토큰", "refreshToken" : "리프레시 토큰"} | SingleResult\<TokenResponseDTO\> | NO
     | 내 정보 보기 | GET | /members | {} | SingleResult\<MemberGetInfoResponseDTO\> | YES
     | 내 정보 수정 | PUT | /members | {"nickname" : "수정할 닉네임", "money" : 보유 현금 기입} | SingleResult\<MemberUpdateResponseDTO\> | YES
-  
+
 <br>
 
 
@@ -158,7 +158,7 @@
     | 게시글 상세 조회 | GET | /boards/board-detail/boardUUID/{boardUUID} | {} | SingleResult\<BoardGetBoardResponseDTO\> | YES
     | 게시글 수정 | PUT | /boards/{boardUUID} |{ "title" : "수정할 제목", "contents" : "내용", "boardStatus" : "PUBLIC_BOARD / PRIVATE_BOARD" } | SingleResult\<BoardUpdateResponseDTO\> | YES
     | 게시글 삭제 | DELETE | /boards/{boardUUID} | {} | SingleResult\<BoardDeleteResponseDTO\> | YES
-  
+
 <br>
 
 
@@ -174,7 +174,7 @@
     | 상품명별 조회 | GET | /products/product-name/{productName} | {} | MultipleResult<ProductGetProductListResponseDTO> | YES
     | 상품 UUID로 조회 | GET | /products/product-uuid/{productUUID} | {} | SingleResult\<ProductGetProductListResponseDTO\> | YES
     | 상품 삭제 | DELETE | /products/{productUUID} | {} | String | YES
-  
+
 <br>
 
   * <b>Cart API</b> <br>
@@ -212,7 +212,7 @@
 > 토큰 없이 접근가능한 API는 다음과 같습니다.
 > - "/sings/**" - 가입 / 로그인 / 토큰 재발행 / 이메일 인증
 > - "/exception/**" - 예외처리
-> - "/profile" - 작동되고 있는 서버 프로필 확인 
+> - "/profile" - 작동되고 있는 서버 프로필 확인
 > - "/actuator/**" - 애플리케이션 상태 확인
 > - "/test" - 테스트
 
@@ -220,7 +220,7 @@
 <br/>
 
 ### 테스트 계정 및 토큰 인증 안내
-```bash 
+```bash
 * email : wjdalsdnchlr@naver.com
 * password : qwer1234
 
@@ -241,8 +241,8 @@ value : 엑세스 토큰값 (로그인시 Response 값으로 확인할 수 있�
 ### 회원가입
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Post
 * 회원가입 : 43.200.144.129/signs/register
 {
@@ -269,13 +269,13 @@ Post
 ### 이메일 인증
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Get
 * 이메일 인증 : 43.200.144.129/signs/confirm-email?email=이메일주소&authToken=엑세스토큰
 * 인증 유효시간 : 5분
 * 회원가입 시 Response 값으로 나왔던 엑세스 토큰과 이메일주소로 진행하면 됩니다.
-* 인증방식 : 
+* 인증방식 :
   - Postman을 통한 인증방식
   - 수신받은 인증 메일을 통한 인증방식
 * 2가지 방식 중 하나를 선택하시면 됩니다.
@@ -298,8 +298,8 @@ Get
 ### 로그인
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Post
 * 로그인 : 43.200.144.129/signs/login
 * 엑세스 토큰 유효시간 : 30분
@@ -325,8 +325,8 @@ Post
 ### 토큰 재발행
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Post
 * 토큰 재발행 : 43.200.144.129/signs/reissue
 {
@@ -348,8 +348,8 @@ Post
 ### 토큰 사용 방법
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 * 각 API의 Headers 에서 Key값과 Value값을 넣어주세요
 * key : X-AUTH-TOKEN
 * value : access 토큰
@@ -365,8 +365,8 @@ Post
 ### 내 정보 보기
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Get
 * 내 정보 보기 : 43.200.144.129/members
 ```
@@ -381,8 +381,8 @@ Get
 ### 내 정보 수정
 
 <details><summary>세부정보</summary>
-  
-```bash 
+
+```bash
 Put
 * 내 정보 수정 : 43.200.144.129/members
 * 닉네임과 보유 자금을 수정 할 수 있습니다.
@@ -409,9 +409,9 @@ Put
 ### 게시글 작성
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Post 
+Post
 * 게시글 작성 : 43.200.144.129/boards
 * boardStatus : PRIVATE_BOARD - 게시글 잠금 / PUBLIC_BOARD - 공개 게시글
 {
@@ -433,9 +433,9 @@ Post
 ### 게시글 전체 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 게시글 전체 조회 : 43.200.144.129/boards
 ```
 <p align="center">
@@ -449,11 +449,11 @@ Get
 <br/>
 
 ### 내가 작성한 게시글 전체 조회
-  
+
 <details><summary>세부정보</summary>
 
 ```bash
-Get 
+Get
 * 내가 작성한 게시글 전체 조회 : 43.200.144.129/boards/my-board-list/email/{이메일주소}
 ```
 <p align="center">
@@ -471,9 +471,9 @@ Get
 ### 게시글 상세 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 게시글 상세조회 : 43.200.144.129/boards/board-detail/boardUUID/{게시글UUID}
 ```
 <p align="center">
@@ -481,7 +481,7 @@ Get
 </p>
 
 > * 전체 조회 / 내가 작성한 글 전체 조회의 Response 값에서 상세조회 하려는 게시글 UUID을 복사하여 사용하면 됩니다.
-> * 게시물의 상세정보를 볼 수 있습니다. 
+> * 게시물의 상세정보를 볼 수 있습니다.
 > * 조회 시, 조회수가 1 증가합니다.
 > * PRIVATE_BOARD 게시물의 경우 본인이 아니면 조회 할 수 없습니다.
 > * 작성한 유저가 아닌 다른 유저가 PRIVATE_BOARD 게시물을 조회하려고 할 시 경고를 출력합니다.
@@ -493,9 +493,9 @@ Get
 ### 게시글 수정
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Put 
+Put
 * 게시글 수정 : 43.200.144.129/boards/{게시글UUID}
 
 {
@@ -519,9 +519,9 @@ Put
 ### 게시글 삭제
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-DELETE 
+DELETE
 * 게시글 삭제 : 43.200.144.129/boards/delete/{게시글UUID}
 ```
 <p align="center">
@@ -542,9 +542,9 @@ DELETE
 ### 상품 등록
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-POST 
+POST
 * 상품 등록 : 43.200.144.129/products
 
 {
@@ -573,9 +573,9 @@ POST
 ### 상품 수정
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Put 
+Put
 * 상품 수정 : 43.200.144.129/products/{상품UUID}
 
 {
@@ -600,9 +600,9 @@ Put
 ### 상품 전체조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 상품 전체조회 : 43.200.144.129/products
 ```
 <p align="center">
@@ -616,9 +616,9 @@ Get
 ### 상품 카테고리별 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 상품 카테고리별 조회 : 43.200.144.129/products/category/{FOOD / HOUSE_WARE / GIFT_CARD}
 ```
 <p align="center">
@@ -633,9 +633,9 @@ Get
 ### 상품 벤더사별 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 상품 벤더사별 조회 : 43.200.144.129/products/vander/{GS25 / Homeplus / CGV}
 ```
 <p align="center">
@@ -649,9 +649,9 @@ Get
 ### 상품 이름별 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 상품 이름별 조회 : 43.200.144.129/products/product-name/{상품이름}
 ```
 <p align="center">
@@ -665,9 +665,9 @@ Get
 ### 상품 UUID 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 상품 UUID 조회 : 43.200.144.129/products/product-uuid/{상품UUID}
 ```
 <p align="center">
@@ -681,9 +681,9 @@ Get
 ### 상품 삭제
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Delete 
+Delete
 * 상품 삭제 : 43.200.144.129/products/{상품UUID}
 ```
 <p align="center">
@@ -701,9 +701,9 @@ Delete
 ### 장바구니 상품 추가
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Post 
+Post
 * 장바구니 상품 추가 : 43.200.144.129/carts
 
 {
@@ -723,9 +723,9 @@ Post
 ### 장바구니 상품 수량 수정
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Put 
+Put
 * 장바구니 상품 수량 수정 : 43.200.144.129/carts/cart-item-uuid/{cartItemUUID}
 * cartItemUUID : cartUUID 가 아닌 장바구니상품 UUID 입니다.
 
@@ -745,9 +745,9 @@ Put
 ### 장바구니 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 장바구니 조회 : 43.200.144.129/carts
 ```
 <p align="center">
@@ -761,9 +761,9 @@ Get
 ### 장바구니 상품 선택 삭제
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Delete 
+Delete
 * 장바구니 상품 선택 삭제 : 43.200.144.129/carts/delete-cart-item/cart-item-uuid/{장바구니상품 UUID}
 ```
 <p align="center">
@@ -777,9 +777,9 @@ Delete
 ### 장바구니 상품 전체 삭제
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Delete 
+Delete
 * 장바구니 상품 전체 삭제 : 43.200.144.129/carts/delete-all-cart-item
 ```
 <p align="center">
@@ -787,7 +787,7 @@ Delete
 <img src = "./img/deleteAllCartItemAfterCart.png" width=100%>
 </p>
 
-> 두번째 사진에서, 장바구니 전체 삭제 후 비어있는 장바구니를 확인할 수 있습니다. 
+> 두번째 사진에서, 장바구니 전체 삭제 후 비어있는 장바구니를 확인할 수 있습니다.
 
 </details>
 
@@ -800,9 +800,9 @@ Delete
 ### 일반 주문
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Post 
+Post
 * 일반 주문 : 43.200.144.129/orders/push-order
 
 {
@@ -828,9 +828,9 @@ Post
 ### 장바구니 상품 주문
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Post 
+Post
 * 장바구니 주문 : 43.200.144.129/orders/push-order-by-cart/order-method/{CASH / POINT}
 
 * 장바구니에 등록한 상품들 전체가 결제됩니다.
@@ -851,9 +851,9 @@ Post
 ### 전체 주문 내역 조회
 
 <details><summary>세부정보</summary>
-  
+
 ```bash
-Get 
+Get
 * 전체 주문 내역 조회 : 43.200.144.129/orders
 
 ```
@@ -892,12 +892,12 @@ Get
   - CSRF : disable  -> REST API이므로 CSRF 보안 미사용
   - Form Login : disable  -> REST API 이므로 Form Login 미사용
   - Session Creation Policy : STATELESS -> JWT로 인증하므로 세션 미사용
-  - AuthorizeRequest : 
+  - AuthorizeRequest :
     - “ /signs/** ” : 회원가입 / 로그인 / 이메일 인증 / 토큰 관련 API를 허용합니다.
     - “ /exception/** ” - 예외처리 API를 허용합니다.
     - “ /test ” - 테스트 API를 허용합니다.
     - " /profile "  - profile API를 허용합니다.
-    - " /actuator/** " - 애플리케이션 상태 확인을 위한 actuator API를 허용합니다. 
+    - " /actuator/** " - 애플리케이션 상태 확인을 위한 actuator API를 허용합니다.
   - Token Authentication Filter : UsernamePasswordAuthenticationFilter.class -> JWT 필터 추가
 
 <br/>
@@ -962,10 +962,10 @@ Get
 
 - EC2에서 Nginx와 스프링부트 JAR 2개를 사용하여 무중단 배포를 구현 하였습니다.
 - Nginx에는 80(http), 443(https) 포트를 할당 하였습니다.
-- 스프링부트1(profile : set1)은 8081 포트로, 스프링부트2(profile : set2)은 8082포트로 실행합니다. 
-- Nginx와 연결된 스프링부트1(set1)이 구동 중 일 때, 배포를 하면 Nginx가 바라보고 있지 않은 스프링부트2(set2)에서 배포가 진행됩니다. 
+- 스프링부트1(profile : set1)은 8081 포트로, 스프링부트2(profile : set2)은 8082포트로 실행합니다.
+- Nginx와 연결된 스프링부트1(set1)이 구동 중 일 때, 배포를 하면 Nginx가 바라보고 있지 않은 스프링부트2(set2)에서 배포가 진행됩니다.
 - 배포가 끝나면 nginx reload를 통해 8081(set1) 대신 8082(set2)를 바라보게 합니다.
-- 이러한 과정을 통해 배포시에도 서비스가 중단되지 않고 무중단 배포가 가능하게 됩니다. 
+- 이러한 과정을 통해 배포시에도 서비스가 중단되지 않고 무중단 배포가 가능하게 됩니다.
 
 
 <br/>
